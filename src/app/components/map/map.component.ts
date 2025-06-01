@@ -15,6 +15,7 @@ import { CharacterComponent } from "../character/character.component";
 export class MapComponent implements OnInit{
   characters = signal<Character[]>([]);
   items = signal<Item[]>([]);
+  selectedCharacter = signal<Character | null>(null);
   
   gridSize: number = 10; // Adjust as needed
 
@@ -75,10 +76,16 @@ export class MapComponent implements OnInit{
   }
 
   moveCharacter(x: number, y: number) {
-
+    let characterToMove = this.selectedCharacter();
+    if (characterToMove === null) return;
+    characterToMove.position = {x, y};
+    const characters = this.characters();
+    const index = characters.findIndex(character => character.id === characterToMove.id);
+    if (index !== -1) characters[index] = { ...characters[index], position: {x, y} };
+    this.characters.set(characters);
   }
 
-isWithinBounds(x: number, y: number): boolean {
-  return x >= 0 && x < this.gridSize && y >= 0 && y < this.gridSize;
-}
+  isWithinBounds(x: number, y: number): boolean {
+    return x >= 0 && x < this.gridSize && y >= 0 && y < this.gridSize;
+  }
 }
