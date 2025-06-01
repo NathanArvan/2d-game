@@ -1,0 +1,8 @@
+<div class="map">
+    <div *ngFor="let row of grid; let y = index" class="row">
+        <div *ngFor="let cell of row; let x = index" (click)="moveCharacter(x, y)" class="cell">
+            <app-character [character]="getCellCharacter(x, y)"></app-character>
+            <app-item [item]="getCellItem(x, y)"></app-item>
+        </div>
+    </div>
+</div>
