@@ -65,8 +65,12 @@ export class BattleMapUiComponent implements OnInit {
     }
 
     if(this.actionState() === ActionStates.AttackSelected){
-      this.attackCharacter(event.x, event.y)
-      this.actionState.set(ActionStates.NoSelection);
+      const characterIdAtPosition = this.getCharacterIdAtPosition(event.x,event.y)
+      if(characterIdAtPosition) {
+        this.attackCharacter(characterIdAtPosition)
+        this.actionState.set(ActionStates.NoSelection);
+        this.remainingActionsInTurn.set(this.remainingActionsInTurn() - 1);
+      }
     }
 
     if(this.actionState() === ActionStates.ItemPickUpSelected){
@@ -96,7 +100,24 @@ export class BattleMapUiComponent implements OnInit {
 
   }
 
-  attackCharacter(x: number, y: number) {}
+  attackCharacter(characterId: number) {
+    const attackedCharacterIndex = this.characters().findIndex(character => character.id === characterId);
+    if (attackedCharacterIndex !== -1) {
+       const characterList = this.characters();
+       characterList[attackedCharacterIndex].currentHealth -= 10;
+       this.characters.set([...characterList]);
+    }
+
+
+  }
+
+  getCharacterIdAtPosition(x: number, y: number): number | null {
+    const character = this.characters().find(character => character.position.x === x && character.position.y === y)
+    if (character) {
+      return character.id;
+    }
+    return null;
+  }
 
   cancelAction() {
     this.actionState.set(ActionStates.NoSelection);
