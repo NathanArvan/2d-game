@@ -55,4 +55,8 @@ export class MapComponent implements OnInit{
   getCellContent(x: number, y: number): Token | null {
     return this.grid()[y][x];
   }
+
+  onBattleCellClicked(x: number, y: number) {
+    this.battleCellClicked.emit({ x, y });
+  }
 }

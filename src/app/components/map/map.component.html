@@ -1,9 +1,8 @@
 <div class="map">
     @for (row of grid(); track row; let i = $index ) {
-
         <div class="row">
             @for (cell of row; track cell; let j = $index) {
-                <div class="cell">
+                <div class="cell" (click)="onBattleCellClicked(i,j)">
                     <app-token [token]="getCellContent(i, j)"></app-token>
                 </div>
             }

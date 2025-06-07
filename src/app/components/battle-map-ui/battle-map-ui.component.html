@@ -7,7 +7,30 @@
       <app-map [characters]="characters()" [items]="items()" [location]="location()"></app-map>
     </div>
 
-    <!-- There will be content for showing the player characters actions -->
+    <div class="action-bar-container">
+      @switch (actionState()) {
+        @case (actionStates.NoSelection) {
+          <div class="action-bar">
+            @for (action of actions; track $index) {
+              <button (click)="selectAction(action)">{{ action.name }}</button>
+            }
+          </div>
+        }
+        @case (actionStates.MoveSelected) {
+          <span>Select a square to move to</span>
+          <button (click)="cancelAction()">Cancel</button>
+        }
+        @case (actionStates.AttackSelected) {
+          <span>Select an enemy to attack</span>
+          <button (click)="cancelAction()">Cancel</button>
+        }
+        @case (actionStates.ItemPickUpSelected) {
+          <span>Select an item to pick up</span>
+          <button (click)="cancelAction()">Cancel</button>
+        }
+      }
+
+    </div>
 
     <!-- There will be content showing information about characters in the combat -->
  </div>

@@ -5,6 +5,7 @@ import { Character } from '../../models/character.model';
 import { Item } from '../../models/item.model';
 import { Location } from '../../models/location.model';
 import { Action, ActionStates } from '../../models/action';
+import { mockActions } from '../../mockData/mockBattleData';
 
 @Component({
   selector: 'app-battle-map-ui',
@@ -20,6 +21,7 @@ export class BattleMapUiComponent implements OnInit {
   location = signal<Location>({ id: 0, name: '', width: 10, height: 10 });
   actionState = signal<ActionStates>(ActionStates.NoSelection);
   actions: Action[] = [];
+  actionStates = ActionStates;
 
   constructor(private gameService: GameService) { 
     this.gameService.initializeMockData();
@@ -32,6 +34,7 @@ export class BattleMapUiComponent implements OnInit {
     if (location) {
       this.location.set(location); 
     }
+    this.actions = mockActions;
   }
 
   onBattleCellClicked(x: number, y: number): void {
@@ -51,6 +54,10 @@ export class BattleMapUiComponent implements OnInit {
     }
   }
 
+  selectAction(action: Action) {
+    this.actionState.set(action.state);
+  }
+
   moveCharacter() {
 
   }
@@ -60,5 +67,9 @@ export class BattleMapUiComponent implements OnInit {
   }
 
   attackCharacter() {}
+
+  cancelAction() {
+    this.actionState.set(ActionStates.NoSelection);
+  }
 
 }

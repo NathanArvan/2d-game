@@ -62,23 +62,23 @@ export const mockMap: Location = {
     id: 2
 }
 
-export const actions: Action[] =[
+export const mockActions: Action[] =[
     {
         name: "Move",
         cost: 1,
         range: 3,
-        state: ActionStates.MoveSelected
+        state: ActionStates.MoveSelected,
     },
     {
         name: "Melee Attack",
         cost: 1,
         range: 1,
-        state: ActionStates.AttackSelected
+        state: ActionStates.AttackSelected,
     },
     {
         name: "Pick up Item",
         cost: 1,
         range: 1,
-        state: ActionStates.ItemPickUpSelected
+        state: ActionStates.ItemPickUpSelected,
     }
 ];
