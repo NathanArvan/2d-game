@@ -28,10 +28,8 @@ export class BattleMapUiComponent implements OnInit {
 
   currentCharacter = computed(() => {
     const battleState = this.battle();
-    console.log("hit computed");
 
     if (battleState) {
-      console.log(battleState.currentTurn);
       const currentTurn = battleState.currentTurn;
       return battleState.turnOrder[currentTurn];
     }
@@ -56,19 +54,20 @@ export class BattleMapUiComponent implements OnInit {
     this.battle.set(this.battleService.createBattle(this.characters()));
   }
 
-  onBattleCellClicked(x: number, y: number): void {
+  onBattleCellClicked(event: {x: number, y: number}): void {
     if (this.actionState() === ActionStates.MoveSelected) {
-      this.moveCharacter();
+      console.log("move clicked")
+      this.moveCharacter(event.x, event.y);
       this.actionState.set(ActionStates.NoSelection);
     }
 
     if(this.actionState() === ActionStates.AttackSelected){
-      this.attackCharacter()
+      this.attackCharacter(event.x, event.y)
       this.actionState.set(ActionStates.NoSelection);
     }
 
     if(this.actionState() === ActionStates.ItemPickUpSelected){
-      this.pickUpItem();
+      this.pickUpItem(event.x, event.y);
       this.actionState.set(ActionStates.NoSelection);
     }
   }
@@ -77,15 +76,24 @@ export class BattleMapUiComponent implements OnInit {
     this.actionState.set(action.state);
   }
 
-  moveCharacter() {
+  moveCharacter(x: number, y: number) {
+    const currentCharacterId = this.currentCharacter()?.id
+    const characters  = this.characters();
+    const characterIndex = characters.findIndex((character) => character.id === currentCharacterId);
+    if (characterIndex !== -1) {
+      characters[characterIndex].position = { x, y };
+    }
+    console.log(characters[characterIndex])
+
+    this.characters.set([...characters]);
 
   }
 
-  pickUpItem() {
+  pickUpItem(x: number, y: number) {
 
   }
 
-  attackCharacter() {}
+  attackCharacter(x: number, y: number) {}
 
   cancelAction() {
     this.actionState.set(ActionStates.NoSelection);

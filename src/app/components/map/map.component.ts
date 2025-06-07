@@ -47,8 +47,6 @@ export class MapComponent implements OnInit{
         grid[y][x] = null;
       }
     }
-    console.log(grid);
-
     return grid;
   }
 
@@ -58,5 +56,6 @@ export class MapComponent implements OnInit{
 
   onBattleCellClicked(x: number, y: number) {
     this.battleCellClicked.emit({ x, y });
+    console.log("cell clicked", x, y)
   }
 }
