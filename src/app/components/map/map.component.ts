@@ -1,5 +1,4 @@
-import { Component, computed, input, OnInit, signal } from '@angular/core';
-import { GameService } from '../../services/game.service';
+import { Component, computed, EventEmitter, input, OnInit, Output } from '@angular/core';
 import { Character } from '../../models/character.model';
 import { Item } from '../../models/item.model';
 import { Location } from '../../models/location.model';
@@ -17,8 +16,7 @@ export class MapComponent implements OnInit{
   characters = input<Character[]>([]);
   items = input<Item[]>([]);
   location = input.required<Location>();
-  //selectedCharacter = signal<Character | null>(null);
-
+  @Output() battleCellClicked = new EventEmitter<{ x:number,y:number}>();
   
   grid = computed<(Token| null)[][]>(() => {
     const grid: (Token | null)[][] = this.initializeGrid();
@@ -35,11 +33,10 @@ export class MapComponent implements OnInit{
     return grid;
   })
 
-  constructor(private gameService: GameService) { }
+  constructor() { }
 
    ngOnInit(): void {
     this.initializeGrid();
-    //this.loadGame();
   }
 
   initializeGrid(): any[] {
@@ -55,31 +52,7 @@ export class MapComponent implements OnInit{
     return grid;
   }
 
-  // loadGame() {
-  //   this.characters.set(this.gameService.getCharacters());
-
-  //   this.items.set(this.gameService.getItems());
- 
-  // }
-
-
-
   getCellContent(x: number, y: number): Token | null {
     return this.grid()[y][x];
-  }
-
-
-  moveCharacter(x: number, y: number) {
-    // let characterToMove = this.selectedCharacter();
-    // if (characterToMove === null) return;
-    // characterToMove.position = {x, y};
-    // const characters = this.characters();
-    // const index = characters.findIndex(character => character.id === characterToMove.id);
-    // if (index !== -1) characters[index] = { ...characters[index], position: {x, y} };
-    //this.characters.set(characters);
-  }
-
-  isWithinBounds(x: number, y: number): boolean {
-    return x >= 0 && x < this.location().width  && y >= 0 && y < this.location().height;
   }
 }
