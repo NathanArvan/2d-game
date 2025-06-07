@@ -1,3 +1,4 @@
+import { Action, ActionStates } from "../models/action";
 import { Character } from "../models/character.model";
 import { Item } from "../models/item.model";
 import { Location } from "../models/location.model";
@@ -60,3 +61,24 @@ export const mockMap: Location = {
     name: 'Grassland',
     id: 2
 }
+
+export const actions: Action[] =[
+    {
+        name: "Move",
+        cost: 1,
+        range: 3,
+        state: ActionStates.MoveSelected
+    },
+    {
+        name: "Melee Attack",
+        cost: 1,
+        range: 1,
+        state: ActionStates.AttackSelected
+    },
+    {
+        name: "Pick up Item",
+        cost: 1,
+        range: 1,
+        state: ActionStates.ItemPickUpSelected
+    }
+];
