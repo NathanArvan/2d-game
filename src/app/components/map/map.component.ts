@@ -21,15 +21,15 @@ export class MapComponent implements OnInit{
 
   
   grid = computed<(Character | Item | null)[][]>(() => {
-    const grid = this.initializeGrid();
+    const grid: (Character | Item | null)[][] = this.initializeGrid();
 
     this.items().forEach(item => {
       if (item.position)
-      this.setCellItem(item.position.x, item.position.y, item);
+      grid[item.position.x][item.position.y] = item
     });
 
     this.characters().forEach(character => {
-      this.setCellCharacter(character.position.x, character.position.y, character);
+      grid[character.position.x][character.position.y] = character;
     });
 
     return grid;
@@ -50,6 +50,8 @@ export class MapComponent implements OnInit{
         grid[y][x] = null;
       }
     }
+    console.log(grid);
+
     return grid;
   }
 
@@ -68,13 +70,6 @@ export class MapComponent implements OnInit{
     return this.grid()[y][x] as Item;
   }
 
-  setCellCharacter(x: number, y: number, character: Character) {
-    this.grid()[y][x] = character;
-  }
-
-  setCellItem(x: number, y: number, item: Item) {
-    this.grid()[y][x] = item;
-  }
 
   moveCharacter(x: number, y: number) {
     // let characterToMove = this.selectedCharacter();

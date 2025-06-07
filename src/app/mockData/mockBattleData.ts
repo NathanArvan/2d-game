@@ -15,7 +15,7 @@ export const mockCharacters: Character[] = [
         name: 'Jane',
         health: 80,
         mana: 30,
-        position: { x: 10, y: 9}
+        position: { x: 6, y: 9}
     },
     {
         id: 3,
