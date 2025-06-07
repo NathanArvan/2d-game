@@ -3,13 +3,12 @@ import { GameService } from '../../services/game.service';
 import { Character } from '../../models/character.model';
 import { Item } from '../../models/item.model';
 import { Location } from '../../models/location.model';
-import { ItemComponent } from "../item/item.component";
-import { CharacterComponent } from "../character/character.component";
+import { TokenComponent } from "../token/token.component";
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [ItemComponent, CharacterComponent],
+  imports: [TokenComponent],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css'
 })
@@ -62,12 +61,10 @@ export class MapComponent implements OnInit{
  
   // }
 
-  getCellCharacter(x: number, y: number): Character | null {
-    return this.grid()[y][x] as Character;
-  }
 
-  getCellItem(x: number, y: number): Item | null {
-    return this.grid()[y][x] as Item;
+
+  getCellContent(x: number, y: number): Character | Item | null {
+    return this.grid()[y][x];
   }
 
 
