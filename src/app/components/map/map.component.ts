@@ -4,6 +4,7 @@ import { Character } from '../../models/character.model';
 import { Item } from '../../models/item.model';
 import { Location } from '../../models/location.model';
 import { TokenComponent } from "../token/token.component";
+import { Token, TokenType } from '../../models/token';
 
 @Component({
   selector: 'app-map',
@@ -19,16 +20,16 @@ export class MapComponent implements OnInit{
   //selectedCharacter = signal<Character | null>(null);
 
   
-  grid = computed<(Character | Item | null)[][]>(() => {
-    const grid: (Character | Item | null)[][] = this.initializeGrid();
+  grid = computed<(Token| null)[][]>(() => {
+    const grid: (Token | null)[][] = this.initializeGrid();
 
     this.items().forEach(item => {
       if (item.position)
-      grid[item.position.x][item.position.y] = item
+      grid[item.position.x][item.position.y] = { content:item, type : TokenType.ITEM}
     });
 
     this.characters().forEach(character => {
-      grid[character.position.x][character.position.y] = character;
+      grid[character.position.x][character.position.y] = { content:character, type : TokenType.CHARACTER};
     });
 
     return grid;
@@ -63,7 +64,7 @@ export class MapComponent implements OnInit{
 
 
 
-  getCellContent(x: number, y: number): Character | Item | null {
+  getCellContent(x: number, y: number): Token | null {
     return this.grid()[y][x];
   }
 

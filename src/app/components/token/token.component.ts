@@ -1,6 +1,5 @@
 import { Component, input } from '@angular/core';
-import { Character } from '../../models/character.model';
-import { Item } from '../../models/item.model';
+import { Token } from '../../models/token';
 
 @Component({
   selector: 'app-token',
@@ -10,5 +9,5 @@ import { Item } from '../../models/item.model';
   styleUrl: './token.component.css'
 })
 export class TokenComponent {
-  content = input<Character | Item | null>();
+  token = input<Token | null>();
 }

@@ -4,7 +4,7 @@
         <div class="row">
             @for (cell of row; track cell; let j = $index) {
                 <div class="cell">
-                    <app-token [content]="getCellContent(i, j)"></app-token>
+                    <app-token [token]="getCellContent(i, j)"></app-token>
                 </div>
             }
         </div>
