@@ -1,5 +1,6 @@
 export interface Location {
     id: number;
     name: string;
-    description: string;
+    width: number;
+    height: number;
 }

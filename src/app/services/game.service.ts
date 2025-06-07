@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Character } from '../models/character.model';
 import { Item } from '../models/item.model';
 import { Location } from '../models/location.model';
+import { mockCharacters, mockItems, mockMap } from '../mockData/mockBattleData';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,16 @@ export class GameService {
 
   constructor() { }
 
-  saveCharacter(characters: Character[]): void {
+  initializeMockData() {
+    const characters = mockCharacters
+    this.saveCharacters(characters);
+    const items = mockItems;
+    this.saveItem(items);
+    const location = mockMap;
+    this.saveLocation(location);
+  }
+
+  saveCharacters(characters: Character[]): void {
     localStorage.setItem('characters', JSON.stringify(characters));
   }
 
