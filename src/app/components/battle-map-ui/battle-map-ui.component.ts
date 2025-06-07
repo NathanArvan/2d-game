@@ -5,6 +5,13 @@ import { Character } from '../../models/character.model';
 import { Item } from '../../models/item.model';
 import { Location } from '../../models/location.model';
 
+export enum ActionStates {
+  NoSelection,
+  MoveSelected,
+  AttackSelected,
+  ItemPickUpSelected
+}
+
 @Component({
   selector: 'app-battle-map-ui',
   standalone: true,
@@ -14,10 +21,10 @@ import { Location } from '../../models/location.model';
 })
 export class BattleMapUiComponent implements OnInit {
 
-    characters = signal<Character[]>([]);
-    items = signal<Item[]>([]);
-    location = signal<Location>({ id: 0, name: '', width: 10, height: 10 });
-
+  characters = signal<Character[]>([]);
+  items = signal<Item[]>([]);
+  location = signal<Location>({ id: 0, name: '', width: 10, height: 10 });
+  actionState = signal<ActionStates>(ActionStates.NoSelection);
 
   constructor(private gameService: GameService) { 
     this.gameService.initializeMockData();
@@ -30,6 +37,11 @@ export class BattleMapUiComponent implements OnInit {
     if (location) {
       this.location.set(location); // Set the
     }
+  }
+
+  onBattleCellClicked(x: number, y: number): void {
+
+    if (this.actionState() === ActionStates.MoveSelected) {}
   }
 
 }
