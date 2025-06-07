@@ -8,28 +8,28 @@
     </div>
 
     <div class="action-bar-container">
-      @switch (actionState()) {
-        @case (actionStates.NoSelection) {
-          <div class="action-bar">
-            @for (action of actions; track $index) {
-              <button (click)="selectAction(action)">{{ action.name }}</button>
-            }
-          </div>
+      <div class="action-bar">
+        @switch (actionState()) {
+          @case (actionStates.NoSelection) {
+            
+              @for (action of actions; track $index) {
+                <button (click)="selectAction(action)">{{ action.name }}</button>
+              }
+          }
+          @case (actionStates.MoveSelected) {
+            <span>Select a square to move to</span>
+            <button (click)="cancelAction()">Cancel</button>
+          }
+          @case (actionStates.AttackSelected) {
+            <span>Select an enemy to attack</span>
+            <button (click)="cancelAction()">Cancel</button>
+          }
+          @case (actionStates.ItemPickUpSelected) {
+            <span>Select an item to pick up</span>
+            <button (click)="cancelAction()">Cancel</button>
+          }
         }
-        @case (actionStates.MoveSelected) {
-          <span>Select a square to move to</span>
-          <button (click)="cancelAction()">Cancel</button>
-        }
-        @case (actionStates.AttackSelected) {
-          <span>Select an enemy to attack</span>
-          <button (click)="cancelAction()">Cancel</button>
-        }
-        @case (actionStates.ItemPickUpSelected) {
-          <span>Select an item to pick up</span>
-          <button (click)="cancelAction()">Cancel</button>
-        }
-      }
-
+      </div>
     </div>
 
     <!-- There will be content showing information about characters in the combat -->
