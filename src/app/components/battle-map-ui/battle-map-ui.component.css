@@ -1,3 +1,8 @@
+.battle-map-ui-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 3rem;
+}
 .map-container {
     display: flex;
     justify-content: center;

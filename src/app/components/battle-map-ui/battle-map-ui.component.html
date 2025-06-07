@@ -1,5 +1,5 @@
 <!-- This will be the top level view a player see when they are in a battle -->
- <div>
+ <div class="battle-map-ui-container">
 
     <div class="turn-info-container">
       <div>Round: {{ battle()?.roundNumber }}</div>
@@ -12,33 +12,41 @@
       <app-map [characters]="characters()" [items]="items()" [location]="location()" (battleCellClicked)="onBattleCellClicked($event)"></app-map>
     </div>
 
-    <div class="action-bar-container">
-      @if (remainingActionsInTurn() > 0) {
-        <div class="action-bar">
-          @switch (actionState()) {
-            @case (actionStates.NoSelection) {
-              
-                @for (action of actions; track $index) {
-                  <button (click)="selectAction(action)">{{ action.name }}</button>
-                }
-            }
-            @case (actionStates.MoveSelected) {
-              <span>Select a square to move to</span>
-              <button (click)="cancelAction()">Cancel</button>
-            }
-            @case (actionStates.AttackSelected) {
-              <span>Select an enemy to attack</span>
-              <button (click)="cancelAction()">Cancel</button>
-            }
-            @case (actionStates.ItemPickUpSelected) {
-              <span>Select an item to pick up</span>
-              <button (click)="cancelAction()">Cancel</button>
-            }
-          }
-        </div>
-      }
-      <button (click)="endTurn()">End Turn</button>
+    <div class="character-info-container">
+      <div>Characters</div>
+      <div class="characterList">
+        @for (character of characters(); track $index) {
+          <div>
+            <span>Name: {{ character.name }} Health: {{character.currentHealth}} / {{character.health}}</span>
+          </div>
+        }
+      </div>
     </div>
-
-    <!-- There will be content showing information about characters in the combat -->
  </div>
+
+<div class="action-bar-container">
+  @if (remainingActionsInTurn() > 0) {
+    <div class="action-bar">
+      @switch (actionState()) {
+        @case (actionStates.NoSelection) {
+          @for (action of actions; track $index) {
+            <button (click)="selectAction(action)">{{ action.name }}</button>
+          }
+        }
+        @case (actionStates.MoveSelected) {
+          <span>Select a square to move to</span>
+          <button (click)="cancelAction()">Cancel</button>
+        }
+        @case (actionStates.AttackSelected) {
+          <span>Select an enemy to attack</span>
+          <button (click)="cancelAction()">Cancel</button>
+        }
+        @case (actionStates.ItemPickUpSelected) {
+          <span>Select an item to pick up</span>
+          <button (click)="cancelAction()">Cancel</button>
+        }
+      }
+    </div>
+  }
+  <button (click)="endTurn()">End Turn</button>
+</div>
