@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { Token } from '../../models/token';
+import { Token, TokenType } from '../../models/token';
 
 @Component({
   selector: 'app-token',
@@ -9,5 +9,6 @@ import { Token } from '../../models/token';
   styleUrl: './token.component.css'
 })
 export class TokenComponent {
+  protected tokenTypes = TokenType;
   token = input<Token | null>();
 }

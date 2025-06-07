@@ -1,3 +1,11 @@
-@if (token()) {
-    {{ token()?.content?.name}}
+@if (token()?.type === tokenTypes.CHARACTER) {
+    <span style="border: 1px solid red;">
+     {{ token()?.content?.name}}
+    </span>
+}
+
+@if (token()?.type === tokenTypes.ITEM) {
+    <span style="border: 1px solid Green;">
+     {{ token()?.content?.name}}
+    </span>
 }
