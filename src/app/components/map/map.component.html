@@ -1,12 +1,12 @@
 <div class="map">
-    @for (row of grid(); track $index; ) {
+    @for (row of grid(); track row; let i = $index ) {
         &nbsp;
         <div class="row">
-            @for (cell of row; track $index;) {
+            @for (cell of row; track cell; let j = $index) {
                 <div class="cell">
                     &nbsp;
-                    <app-character></app-character>
-                    <app-item></app-item>
+                    <app-character [character]="getCellCharacter(i, j)"></app-character>
+                    <app-item [item]="getCellItem(i, j)"></app-item>
                 </div>
             }
         </div>
