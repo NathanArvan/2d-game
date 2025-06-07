@@ -3,9 +3,6 @@
         <div class="row">
             @for (cell of row; track cell; let j = $index) {
                 <div class="cell" (click)="onBattleCellClicked(i,j)">
-                    X Position: {{ i }}
-                    Y Position: {{ j }}
-
                     <app-token [token]="getCellContent(i, j)"></app-token>
                 </div>
             }

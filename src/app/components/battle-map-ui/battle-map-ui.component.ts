@@ -25,6 +25,8 @@ export class BattleMapUiComponent implements OnInit {
   actions: Action[] = [];
   actionStates = ActionStates;
   battle = signal<Battle | null>(null);
+  remainingActionsInTurn = signal<number>(0);
+
 
   currentCharacter = computed(() => {
     const battleState = this.battle();
@@ -52,11 +54,12 @@ export class BattleMapUiComponent implements OnInit {
     }
     this.actions = mockActions;
     this.battle.set(this.battleService.createBattle(this.characters()));
+    this.remainingActionsInTurn.set(this.currentCharacter()?.actionsPerTurn ?? 0);
   }
 
   onBattleCellClicked(event: {x: number, y: number}): void {
     if (this.actionState() === ActionStates.MoveSelected) {
-      console.log("move clicked")
+      this.remainingActionsInTurn.set(this.remainingActionsInTurn() - 1);
       this.moveCharacter(event.x, event.y);
       this.actionState.set(ActionStates.NoSelection);
     }
@@ -109,6 +112,7 @@ export class BattleMapUiComponent implements OnInit {
         currentTurn: updatedBattle.currentTurn,
       }
       this.battle.set(newBattle);
+      this.remainingActionsInTurn.set(this.currentCharacter()?.actionsPerTurn ?? 3);
     }      
   }
 

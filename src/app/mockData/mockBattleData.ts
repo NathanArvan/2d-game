@@ -9,28 +9,32 @@ export const mockCharacters: Character[] = [
         name: 'John',
         health: 100,
         mana: 0,
-        position: { x: 5, y: 7}
+        position: { x: 5, y: 7},
+        actionsPerTurn: 3,
     },
     {
         id: 2,
         name: 'Jane',
         health: 80,
         mana: 30,
-        position: { x: 6, y: 9}
+        position: { x: 6, y: 9},
+        actionsPerTurn: 3,
     },
     {
         id: 3,
         name: 'Mike',
         health: 75,
         mana: 20,
-        position: { x: 8, y: 6}
+        position: { x: 8, y: 6},
+        actionsPerTurn: 3,
     },
     {
         id: 4,
         name: 'Sarah',
         health: 90,
         mana: 10,
-        position: { x: 3, y: 2}
+        position: { x: 3, y: 2},
+        actionsPerTurn: 3,
     },
 ]
 

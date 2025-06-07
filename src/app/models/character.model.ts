@@ -4,4 +4,5 @@ export interface Character {
     health: number;
     mana: number;
     position: { x: number; y: number };
+    actionsPerTurn: number;
 }
