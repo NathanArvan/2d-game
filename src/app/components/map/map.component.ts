@@ -24,6 +24,7 @@ export class MapComponent implements OnInit{
     const grid = this.initializeGrid();
 
     this.items().forEach(item => {
+      if (item.position)
       this.setCellItem(item.position.x, item.position.y, item);
     });
 
