@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { MapComponent } from "../map/map.component";
 import { GameService } from '../../services/game.service';
 import { Character } from '../../models/character.model';
@@ -6,6 +6,8 @@ import { Item } from '../../models/item.model';
 import { Location } from '../../models/location.model';
 import { Action, ActionStates } from '../../models/action';
 import { mockActions } from '../../mockData/mockBattleData';
+import { Battle } from '../../models/turn.model';
+import { BattleService } from '../../services/battle.service';
 
 @Component({
   selector: 'app-battle-map-ui',
@@ -22,8 +24,24 @@ export class BattleMapUiComponent implements OnInit {
   actionState = signal<ActionStates>(ActionStates.NoSelection);
   actions: Action[] = [];
   actionStates = ActionStates;
+  battle = signal<Battle | null>(null);
 
-  constructor(private gameService: GameService) { 
+  currentCharacter = computed(() => {
+    const battleState = this.battle();
+    console.log("hit computed");
+
+    if (battleState) {
+      console.log(battleState.currentTurn);
+      const currentTurn = battleState.currentTurn;
+      return battleState.turnOrder[currentTurn];
+    }
+    return null;
+  });
+
+  constructor(
+    private gameService: GameService,
+    private battleService: BattleService
+  ) { 
     this.gameService.initializeMockData();
   }
 
@@ -35,6 +53,7 @@ export class BattleMapUiComponent implements OnInit {
       this.location.set(location); 
     }
     this.actions = mockActions;
+    this.battle.set(this.battleService.createBattle(this.characters()));
   }
 
   onBattleCellClicked(x: number, y: number): void {
@@ -70,6 +89,19 @@ export class BattleMapUiComponent implements OnInit {
 
   cancelAction() {
     this.actionState.set(ActionStates.NoSelection);
+  }
+
+  endTurn() {
+    const currentBattle = this.battle();
+    if (currentBattle) {
+      const updatedBattle = this.battleService.endTurn(currentBattle);
+      const newBattle: Battle = {
+        turnOrder: updatedBattle.turnOrder,
+        roundNumber: updatedBattle.roundNumber,
+        currentTurn: updatedBattle.currentTurn,
+      }
+      this.battle.set(newBattle);
+    }      
   }
 
 }

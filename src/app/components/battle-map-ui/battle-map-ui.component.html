@@ -1,7 +1,11 @@
 <!-- This will be the top level view a player see when they are in a battle -->
  <div>
 
-    <!-- There will be content for showing turn order -->
+    <div class="turn-info-container">
+      <div>Round: {{ battle()?.roundNumber }}</div>
+      <div>Turn: {{ battle()?.currentTurn  }}</div>
+      <div>Characters Turn: {{ currentCharacter()?.name }}</div>
+    </div>
 
     <div class="map-container">
       <app-map [characters]="characters()" [items]="items()" [location]="location()"></app-map>
@@ -30,6 +34,7 @@
           }
         }
       </div>
+      <button (click)="endTurn()">End Turn</button>
     </div>
 
     <!-- There will be content showing information about characters in the combat -->
