@@ -28,9 +28,9 @@ export class BattleMapUiComponent implements OnInit {
   ngOnInit(): void {
     this.characters.set(this.gameService.getCharacters());
     this.items.set(this.gameService.getItems());
-    const location = this.gameService.getLocation(); // Get the current location in the game service
+    const location = this.gameService.getLocation();
     if (location) {
-      this.location.set(location); // Set the
+      this.location.set(location); 
     }
   }
 
