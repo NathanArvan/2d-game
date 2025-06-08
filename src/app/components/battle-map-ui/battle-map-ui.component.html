@@ -22,7 +22,7 @@
       <app-map [characters]="characters()" [items]="items()" [location]="location()" (battleCellClicked)="onBattleCellClicked($event)"></app-map>
     </div>
 
-    <div class="character-info-container">
+    <div class="character-info-container card">
       <div>Characters</div>
       <div class="characterList">
         @for (character of characters(); track $index) {
