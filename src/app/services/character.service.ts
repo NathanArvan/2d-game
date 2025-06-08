@@ -20,7 +20,8 @@ export class CharacterService {
     const classActions = this.getCharacterClassActions(character.levels);
     const itemsActions = this.getCharacterItemActions(character.items.map(item => item.templateId));
     const moveActions = this.getMoveActions();
-    return [...classActions, ...itemsActions, ...moveActions];
+    const commonActions = this.getCommonActions();
+    return [...classActions, ...itemsActions, ...moveActions, ...commonActions];
   }
 
   getCharacterClassActions(levels: ClassLevels[]): Action[] {
@@ -35,11 +36,21 @@ export class CharacterService {
         actions.push(...itemActions);
       }
     }
+
     return actions;
   }
 
   getMoveActions() : Action[] {
     const moveAction = this.actionService.getActionById(1);
+    if(moveAction){
+      return [moveAction];
+    } else{
+      return [];
+    }
+  }
+
+  getCommonActions() : Action[] {
+    const moveAction = this.actionService.getActionById(3);
     if(moveAction){
       return [moveAction];
     } else{
