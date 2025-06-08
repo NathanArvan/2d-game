@@ -2,12 +2,12 @@ import { Component, computed, OnInit, signal } from '@angular/core';
 import { MapComponent } from "../map/map.component";
 import { GameService } from '../../services/game.service';
 import { Character } from '../../models/character.model';
-import { Item } from '../../models/item.model';
+import { ItemInstance } from '../../models/item.model';
 import { Location } from '../../models/location.model';
 import { Action, ActionStates } from '../../models/action';
-import { mockActions } from '../../mockData/mockBattleData';
 import { Battle } from '../../models/turn.model';
 import { BattleService } from '../../services/battle.service';
+import { CharacterService } from '../../services/character.service';
 
 @Component({
   selector: 'app-battle-map-ui',
@@ -19,10 +19,9 @@ import { BattleService } from '../../services/battle.service';
 export class BattleMapUiComponent implements OnInit {
 
   characters = signal<Character[]>([]);
-  items = signal<Item[]>([]);
+  items = signal<ItemInstance[]>([]);
   location = signal<Location>({ id: 0, name: '', width: 10, height: 10 });
   actionState = signal<ActionStates>(ActionStates.NoSelection);
-  actions: Action[] = [];
   actionStates = ActionStates;
   battle = signal<Battle | null>(null);
   remainingActionsInTurn = signal<number>(0);
@@ -38,9 +37,17 @@ export class BattleMapUiComponent implements OnInit {
     return null;
   });
 
+  characterActions = computed(() => {
+    const character = this.currentCharacter();
+    if (!character) return [];
+    const actions = this.characterService.getCharacterActions(character);
+    return actions;
+  })
+
   constructor(
     private gameService: GameService,
-    private battleService: BattleService
+    private battleService: BattleService,
+    private characterService: CharacterService,
   ) { 
     this.gameService.initializeMockData();
   }
@@ -52,7 +59,6 @@ export class BattleMapUiComponent implements OnInit {
     if (location) {
       this.location.set(location); 
     }
-    this.actions = mockActions;
     this.battle.set(this.battleService.createBattle(this.characters()));
     this.remainingActionsInTurn.set(this.currentCharacter()?.actionsPerTurn ?? 0);
   }

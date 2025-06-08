@@ -29,7 +29,7 @@
     <div class="action-bar">
       @switch (actionState()) {
         @case (actionStates.NoSelection) {
-          @for (action of actions; track $index) {
+          @for (action of characterActions(); track $index) {
             <button (click)="selectAction(action)">{{ action.name }}</button>
           }
         }

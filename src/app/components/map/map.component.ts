@@ -1,9 +1,9 @@
 import { Component, computed, EventEmitter, input, OnInit, Output } from '@angular/core';
 import { Character } from '../../models/character.model';
-import { Item } from '../../models/item.model';
 import { Location } from '../../models/location.model';
 import { TokenComponent } from "../token/token.component";
 import { Token, TokenType } from '../../models/token';
+import { ItemInstance } from '../../models/item.model';
 
 @Component({
   selector: 'app-map',
@@ -14,7 +14,7 @@ import { Token, TokenType } from '../../models/token';
 })
 export class MapComponent implements OnInit{
   characters = input<Character[]>([]);
-  items = input<Item[]>([]);
+  items = input<ItemInstance[]>([]);
   location = input.required<Location>();
   @Output() battleCellClicked = new EventEmitter<{ x:number,y:number}>();
   

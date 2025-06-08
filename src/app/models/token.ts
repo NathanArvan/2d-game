@@ -1,8 +1,8 @@
 import { Character } from "./character.model";
-import { Item } from "./item.model";
+import { ItemInstance } from "./item.model";
 
 export interface Token {
-    content: Character | Item;
+    content: Character | ItemInstance;
     type: TokenType;
 }
 

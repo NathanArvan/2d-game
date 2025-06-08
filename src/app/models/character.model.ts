@@ -1,4 +1,4 @@
-import { Item } from "./item.model";
+import { ItemInstance } from "./item.model";
 
 export interface Character {
     id: number;
@@ -8,7 +8,8 @@ export interface Character {
     mana: number;
     position: { x: number; y: number };
     actionsPerTurn: number;
-    items: Item[];
+    items: ItemInstance[];
+    levels: ClassLevels[];
 }
 
 export interface ClassLevels {

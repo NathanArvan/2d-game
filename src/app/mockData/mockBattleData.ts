@@ -1,7 +1,8 @@
 import { Action, ActionStates } from "../models/action";
 import { Character } from "../models/character.model";
-import { Item } from "../models/item.model";
+import { ItemInstance } from "../models/item.model";
 import { Location } from "../models/location.model";
+import { items } from "../permanent-data/items";
 
 export const mockCharacters: Character[] = [
     {
@@ -13,6 +14,10 @@ export const mockCharacters: Character[] = [
         position: { x: 5, y: 7},
         actionsPerTurn: 3,
         items: [],
+        levels: [{
+            level: 1,
+            classId:1,
+        }]
     },
     {
         id: 2,
@@ -23,6 +28,10 @@ export const mockCharacters: Character[] = [
         position: { x: 6, y: 9},
         actionsPerTurn: 3,
         items: [],
+        levels: [{
+            level: 1,
+            classId:2,
+        }]
     },
     {
         id: 3,
@@ -33,6 +42,10 @@ export const mockCharacters: Character[] = [
         position: { x: 8, y: 6},
         actionsPerTurn: 3,
         items: [],
+        levels: [{
+            level: 1,
+            classId:3,
+        }]
     },
     {
         id: 4,
@@ -43,30 +56,31 @@ export const mockCharacters: Character[] = [
         position: { x: 3, y: 2},
         actionsPerTurn: 3,
         items: [],
+        levels: [{
+            level: 1,
+            classId:4,
+        }]
     },
 ]
 
-export const mockItems: Item[] = [
+const itemData = items;
+
+export const mockItems: ItemInstance[] = [
     {
         id: 1,
-        name: 'Potion',
-        description: 'Heals the user for 50 health points.',
         position: { x: 6, y: 4},
-        actionIds: [4],
+        ...itemData[0],
+
     },
     {
         id: 2,
-        name: 'Sword',
-        description: 'A sharp sword that deals damage to enemies.',
         position: { x: 1, y: 8},
-        actionIds: [1]
+        ...itemData[1],
     },
     {
         id: 3,
-        name: 'Shield',
-        description: 'Protects the user from incoming attacks.',
         position: { x: 9, y: 7},
-        actionIds: [5]
+        ...itemData[2],
     },
 ]
 
