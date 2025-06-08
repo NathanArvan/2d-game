@@ -10,3 +10,8 @@ export interface Character {
     actionsPerTurn: number;
     items: Item[];
 }
+
+export interface ClassLevels {
+    level: number;
+    classId: number;
+}
