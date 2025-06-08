@@ -37,6 +37,7 @@ export class BattleMapUiComponent implements OnInit {
   })
 
   currentCharacter = computed(() => {
+    //TODO: need to have current character update when characters signal changes, like when picking up an item
     const battleState = this.battle();
 
     if (battleState) {
@@ -102,8 +103,12 @@ export class BattleMapUiComponent implements OnInit {
     }
 
     if(this.actionState() === ActionStates.ItemPickUpSelected){
-      this.pickUpItem(event.x, event.y);
-      this.actionState.set(ActionStates.NoSelection);
+      const itemIdAtPosition = this.getItemIdAtPosition(event.x,event.y)
+      if(itemIdAtPosition) {
+        this.pickUpItem(itemIdAtPosition);
+        this.clearAction();
+        this.remainingActionsInTurn.set(this.remainingActionsInTurn() - 1);
+      }
     }
   }
 
@@ -125,9 +130,30 @@ export class BattleMapUiComponent implements OnInit {
 
   }
 
-  pickUpItem(x: number, y: number) {
+  pickUpItem(itemId: number) {
+    const item = this.items().find(item => item.id === itemId);
+    const currentCharacter = this.currentCharacter();
+    if (item && currentCharacter) {
+      const items = this.items();
+      items.splice(items.findIndex(item => item.id === itemId), 1);
+      this.items.set([...items]); 
 
+      const characters = this.characters();
+      const characterIndex = characters.findIndex(character => character.id === currentCharacter.id);
+      characters[characterIndex].items = [...characters[characterIndex].items, item]
+      this.characters.set([...characters]);
+    }
   }
+
+  getItemIdAtPosition(x: number, y: number): number | null {
+    const item = this.items().find(item => item.position?.x === x && item.position?.y === y);
+    if (item) {
+      return item.id;
+    }
+    return null; 
+  }
+
+
 
   attackCharacter(characterId: number) {
     const attackedCharacterIndex = this.characters().findIndex(character => character.id === characterId);
