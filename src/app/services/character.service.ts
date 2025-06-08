@@ -3,6 +3,7 @@ import { ClassService } from './class.service';
 import { ItemService } from './item.service';
 import { Character, ClassLevels } from '../models/character.model';
 import { Action } from '../models/action';
+import { ActionService } from './action.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,15 @@ export class CharacterService {
 
   constructor(
     private classService: ClassService,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private actionService: ActionService
   ) { }
 
   getCharacterActions(character: Character): Action[] {
     const classActions = this.getCharacterClassActions(character.levels);
     const itemsActions = this.getCharacterItemActions(character.items.map(item => item.templateId));
-    return classActions.concat(itemsActions);
+    const moveActions = this.getMoveActions();
+    return classActions.concat(itemsActions).concat(moveActions);
   }
 
   getCharacterClassActions(levels: ClassLevels[]): Action[] {
@@ -33,5 +36,14 @@ export class CharacterService {
       }
     }
     return actions;
+  }
+
+  getMoveActions() : Action[] {
+    const moveAction = this.actionService.getActionById(0);
+    if(moveAction){
+      return [moveAction];
+    } else{
+      return [];
+    }
   }
 }

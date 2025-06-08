@@ -4,26 +4,41 @@ export const Classes: Class[] = [
     {
         id: 1,
         name: "Warrior",
-        actions: []
+        actions: [{
+            actionId: 6,
+            levelRestriction: 1
+        }]
     },
     {
         id: 2,
         name: "Mage",
-        actions: []
+        actions: [{
+            actionId: 7,
+            levelRestriction: 1
+        }]
     },
     {
         id: 3,
         name: "Rogue",
-        actions: []
+        actions: [{
+            actionId: 8,
+            levelRestriction: 1
+        }]
     },
     {
         id: 4,
         name: "Ranger",
-        actions: []
+        actions: [{
+            actionId: 9,
+            levelRestriction: 1
+        }]
     },
     {
         id: 5,
         name: "Bard",
-        actions: []
+        actions: [{
+            actionId: 10,
+            levelRestriction: 1
+        }]
     },
 ]

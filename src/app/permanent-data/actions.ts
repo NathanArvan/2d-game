@@ -34,4 +34,37 @@ export const Actions: Action[] =    [{
     cost: 1,
     range: 0,
     state: ActionStates.UseItemSelected,
-}];
+},{
+    id: 6,
+    name: "Power Attack",
+    cost: 2,
+    range: 1,
+    state: ActionStates.AttackSelected,
+},
+{
+    id: 7,
+    name: "Ether Shot",
+    cost: 2,
+    range: 3,
+    state: ActionStates.AttackSelected,
+},{
+    id: 8,
+    name: "Sneak Attack",
+    cost: 1,
+    range: 1,
+    state: ActionStates.AttackSelected,
+},
+{
+    id: 9,
+    name: "Ranged Attack",
+    cost: 2,
+    range: 3,
+    state: ActionStates.AttackSelected,
+},{
+    id: 10,
+    name: "Encourage Ally",
+    cost: 2,
+    range: 3,
+    state: ActionStates.AttackSelected,
+}
+];

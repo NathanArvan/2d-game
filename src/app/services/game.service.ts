@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Character } from '../models/character.model';
-import { Item } from '../models/item.model';
+import { ItemInstance } from '../models/item.model';
 import { Location } from '../models/location.model';
 import { mockCharacters, mockItems, mockMap } from '../mockData/mockBattleData';
 
@@ -29,10 +29,10 @@ export class GameService {
     return characters ? JSON.parse(characters) : [];
   }
 
-  saveItem(items: Item[]): void {
+  saveItem(items: ItemInstance[]): void {
     localStorage.setItem('items', JSON.stringify(items));
   }
-  getItems(): Item[] {
+  getItems(): ItemInstance[] {
     const items = localStorage.getItem('items');
     return items ? JSON.parse(items) : [];
   }
