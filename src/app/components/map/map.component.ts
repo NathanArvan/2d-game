@@ -1,14 +1,14 @@
 import { Component, computed, EventEmitter, input, OnInit, Output } from '@angular/core';
 import { Character } from '../../models/character.model';
 import { Location } from '../../models/location.model';
-import { TokenComponent } from "../token/token.component";
 import { Token, TokenType } from '../../models/token';
 import { ItemInstance } from '../../models/item.model';
+import { MapCellComponent } from "../map-cell/map-cell.component";
 
 @Component({
   selector: 'app-map',
   standalone: true,
-  imports: [TokenComponent],
+  imports: [MapCellComponent],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css'
 })
