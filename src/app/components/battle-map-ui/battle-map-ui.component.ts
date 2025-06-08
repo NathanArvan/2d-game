@@ -8,6 +8,7 @@ import { Action, ActionStates } from '../../models/action';
 import { Battle } from '../../models/turn.model';
 import { BattleService } from '../../services/battle.service';
 import { CharacterService } from '../../services/character.service';
+import { ClassService } from '../../services/class.service';
 
 @Component({
   selector: 'app-battle-map-ui',
@@ -44,10 +45,23 @@ export class BattleMapUiComponent implements OnInit {
     return actions;
   })
 
+  characterClasses = computed<{className: string, classLevel: number}[]>(() => {
+    const character = this.currentCharacter();
+    const classes: {className: string, classLevel: number}[] = [];
+    if (!character) return [];
+    character.levels.forEach(level => {
+      const playerClass = this.classService.getClassById(level.classId);
+      if (!playerClass) return;
+      classes.push({ className: playerClass.name, classLevel: level.level });
+    });
+    return classes;
+  })
+
   constructor(
     private gameService: GameService,
     private battleService: BattleService,
     private characterService: CharacterService,
+    private classService: ClassService,
   ) { 
     this.gameService.initializeMockData();
   }
