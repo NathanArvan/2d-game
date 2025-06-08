@@ -1,4 +1,5 @@
 import { Action, ActionStates } from "../models/action";
+import { TokenType } from "../models/token";
 
 export const Actions: Action[] =    [{
     id: 1,
@@ -6,6 +7,7 @@ export const Actions: Action[] =    [{
     cost: 1,
     range: 3,
     state: ActionStates.MoveSelected,
+    targetType: null,
 },
 {
     id: 2,
@@ -13,6 +15,7 @@ export const Actions: Action[] =    [{
     cost: 1,
     range: 1,
     state: ActionStates.AttackSelected,
+    targetType: TokenType.CHARACTER,
 },
 {
     id: 3,
@@ -20,6 +23,7 @@ export const Actions: Action[] =    [{
     cost: 1,
     range: 1,
     state: ActionStates.ItemPickUpSelected,
+    targetType: TokenType.ITEM,
 },
 {
     id: 4,
@@ -27,6 +31,7 @@ export const Actions: Action[] =    [{
     cost: 1,
     range: 0,
     state: ActionStates.UseItemSelected,
+    targetType: null,
 },
 {
     id: 5,
@@ -34,12 +39,14 @@ export const Actions: Action[] =    [{
     cost: 1,
     range: 0,
     state: ActionStates.UseItemSelected,
+    targetType: null,
 },{
     id: 6,
     name: "Power Attack",
     cost: 2,
     range: 1,
     state: ActionStates.AttackSelected,
+    targetType: TokenType.CHARACTER
 },
 {
     id: 7,
@@ -47,12 +54,14 @@ export const Actions: Action[] =    [{
     cost: 2,
     range: 3,
     state: ActionStates.AttackSelected,
+    targetType: TokenType.CHARACTER
 },{
     id: 8,
     name: "Sneak Attack",
     cost: 1,
     range: 1,
     state: ActionStates.AttackSelected,
+    targetType: TokenType.CHARACTER
 },
 {
     id: 9,
@@ -60,11 +69,13 @@ export const Actions: Action[] =    [{
     cost: 2,
     range: 3,
     state: ActionStates.AttackSelected,
+    targetType: TokenType.CHARACTER
 },{
     id: 10,
     name: "Encourage Ally",
     cost: 2,
     range: 3,
     state: ActionStates.AttackSelected,
+    targetType: TokenType.CHARACTER
 }
 ];

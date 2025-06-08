@@ -6,6 +6,7 @@
                     <app-map-cell 
                         [token]="getCellContent(i, j)"
                         [isInRange]="calculateIsInRange(i, j)"
+                        [isValidTarget]="calculateIsValidTarget(i, j)"
                     ></app-map-cell>
                 </div>
             }

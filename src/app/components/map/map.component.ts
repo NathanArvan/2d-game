@@ -70,4 +70,14 @@ export class MapComponent implements OnInit{
     const actionRange = context.action.range;
     return horizontalDistance <= actionRange && verticalDistance <= actionRange;
   }
+
+  calculateIsValidTarget(x: number, y: number): boolean {
+    const context = this.actionContext();
+    if (context === null) return false;
+    if(!this.calculateIsInRange(x,y)) return false;
+    const cellContent = this.getCellContent(x, y);
+    if (cellContent === null) return false;
+    return cellContent.type === context.action.targetType;
+  }
+
 }
