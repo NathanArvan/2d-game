@@ -51,19 +51,22 @@ export const mockItems: Item[] = [
         id: 1,
         name: 'Potion',
         description: 'Heals the user for 50 health points.',
-        position: { x: 6, y: 4}
+        position: { x: 6, y: 4},
+        actions: [],
     },
     {
         id: 2,
         name: 'Sword',
         description: 'A sharp sword that deals damage to enemies.',
-        position: { x: 1, y: 8}
+        position: { x: 1, y: 8},
+        actions: []
     },
     {
         id: 3,
         name: 'Shield',
         description: 'Protects the user from incoming attacks.',
-        position: { x: 9, y: 7}
+        position: { x: 9, y: 7},
+        actions: []
     },
 ]
 
