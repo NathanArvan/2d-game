@@ -1,4 +1,5 @@
 export interface Action {
+    id: number;
     name: string;
     cost: number;
     range: number;
@@ -9,5 +10,6 @@ export enum ActionStates {
   NoSelection,
   MoveSelected,
   AttackSelected,
-  ItemPickUpSelected
+  ItemPickUpSelected,
+  UseItemSelected,
 }

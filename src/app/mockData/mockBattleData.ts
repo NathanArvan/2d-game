@@ -52,21 +52,21 @@ export const mockItems: Item[] = [
         name: 'Potion',
         description: 'Heals the user for 50 health points.',
         position: { x: 6, y: 4},
-        actions: [],
+        actionIds: [4],
     },
     {
         id: 2,
         name: 'Sword',
         description: 'A sharp sword that deals damage to enemies.',
         position: { x: 1, y: 8},
-        actions: []
+        actionIds: [1]
     },
     {
         id: 3,
         name: 'Shield',
         description: 'Protects the user from incoming attacks.',
         position: { x: 9, y: 7},
-        actions: []
+        actionIds: [5]
     },
 ]
 
@@ -76,24 +76,3 @@ export const mockMap: Location = {
     name: 'Grassland',
     id: 2
 }
-
-export const mockActions: Action[] =[
-    {
-        name: "Move",
-        cost: 1,
-        range: 3,
-        state: ActionStates.MoveSelected,
-    },
-    {
-        name: "Melee Attack",
-        cost: 1,
-        range: 1,
-        state: ActionStates.AttackSelected,
-    },
-    {
-        name: "Pick up Item",
-        cost: 1,
-        range: 1,
-        state: ActionStates.ItemPickUpSelected,
-    }
-];

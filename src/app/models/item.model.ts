@@ -5,5 +5,5 @@ export interface Item {
     name: string;
     description: string;
     position: { x: number; y: number } | null;
-    actions: Action[];
+    actionIds: number[];
 }
