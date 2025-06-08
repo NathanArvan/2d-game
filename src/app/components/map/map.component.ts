@@ -4,6 +4,7 @@ import { Location } from '../../models/location.model';
 import { Token, TokenType } from '../../models/token';
 import { ItemInstance } from '../../models/item.model';
 import { MapCellComponent } from "../map-cell/map-cell.component";
+import { Action } from '../../models/action';
 
 @Component({
   selector: 'app-map',
@@ -16,6 +17,8 @@ export class MapComponent implements OnInit{
   characters = input<Character[]>([]);
   items = input<ItemInstance[]>([]);
   location = input.required<Location>();
+  actionContext = input<{action: Action, position: { x:number,y:number}} | null>(null);
+
   @Output() battleCellClicked = new EventEmitter<{ x:number,y:number}>();
   
   grid = computed<(Token| null)[][]>(() => {
@@ -57,5 +60,14 @@ export class MapComponent implements OnInit{
   onBattleCellClicked(x: number, y: number) {
     this.battleCellClicked.emit({ x, y });
     console.log("cell clicked", x, y)
+  }
+
+  calculateIsInRange(x: number, y: number): boolean {
+    const context = this.actionContext();
+    if (context === null) return false;
+    const horizontalDistance = Math.abs(context.position.x - x);
+    const verticalDistance = Math.abs(context.position.y - y);
+    const actionRange = context.action.range;
+    return horizontalDistance <= actionRange && verticalDistance <= actionRange;
   }
 }

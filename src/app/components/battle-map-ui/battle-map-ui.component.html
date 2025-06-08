@@ -19,7 +19,13 @@
 
 
     <div class="map-container">
-      <app-map [characters]="characters()" [items]="items()" [location]="location()" (battleCellClicked)="onBattleCellClicked($event)"></app-map>
+      <app-map 
+        [characters]="characters()" 
+        [items]="items()" 
+        [location]="location()" 
+        [actionContext]="selectedActionContext()" 
+        (battleCellClicked)="onBattleCellClicked($event)"
+      ></app-map>
     </div>
 
     <div class="character-info-container card">
@@ -45,15 +51,15 @@
         }
         @case (actionStates.MoveSelected) {
           <span>Select a square to move to</span>
-          <button (click)="cancelAction()">Cancel</button>
+          <button (click)="clearAction()">Cancel</button>
         }
         @case (actionStates.AttackSelected) {
           <span>Select an enemy to attack</span>
-          <button (click)="cancelAction()">Cancel</button>
+          <button (click)="clearAction()">Cancel</button>
         }
         @case (actionStates.ItemPickUpSelected) {
           <span>Select an item to pick up</span>
-          <button (click)="cancelAction()">Cancel</button>
+          <button (click)="clearAction()">Cancel</button>
         }
       }
     </div>

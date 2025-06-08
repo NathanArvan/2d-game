@@ -3,7 +3,10 @@
         <div class="row">
             @for (cell of row; track cell; let j = $index) {
                 <div (click)="onBattleCellClicked(i,j)">
-                    <app-map-cell [token]="getCellContent(i, j)"></app-map-cell>
+                    <app-map-cell 
+                        [token]="getCellContent(i, j)"
+                        [isInRange]="calculateIsInRange(i, j)"
+                    ></app-map-cell>
                 </div>
             }
         </div>

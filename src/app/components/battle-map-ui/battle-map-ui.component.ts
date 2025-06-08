@@ -26,7 +26,15 @@ export class BattleMapUiComponent implements OnInit {
   actionStates = ActionStates;
   battle = signal<Battle | null>(null);
   remainingActionsInTurn = signal<number>(0);
-
+  selectedAction = signal<Action | null>(null);
+  selectedActionContext = computed(() => {
+    const action = this.selectedAction();
+    const character = this.currentCharacter();
+    if (character === null || action === null) {
+      return null;
+    }
+    return {action, position: character.position}
+  })
 
   currentCharacter = computed(() => {
     const battleState = this.battle();
@@ -81,14 +89,14 @@ export class BattleMapUiComponent implements OnInit {
     if (this.actionState() === ActionStates.MoveSelected) {
       this.remainingActionsInTurn.set(this.remainingActionsInTurn() - 1);
       this.moveCharacter(event.x, event.y);
-      this.actionState.set(ActionStates.NoSelection);
+      this.clearAction();
     }
 
     if(this.actionState() === ActionStates.AttackSelected){
       const characterIdAtPosition = this.getCharacterIdAtPosition(event.x,event.y)
       if(characterIdAtPosition) {
         this.attackCharacter(characterIdAtPosition)
-        this.actionState.set(ActionStates.NoSelection);
+        this.clearAction();
         this.remainingActionsInTurn.set(this.remainingActionsInTurn() - 1);
       }
     }
@@ -101,6 +109,7 @@ export class BattleMapUiComponent implements OnInit {
 
   selectAction(action: Action) {
     this.actionState.set(action.state);
+    this.selectedAction.set(action);
   }
 
   moveCharacter(x: number, y: number) {
@@ -139,11 +148,13 @@ export class BattleMapUiComponent implements OnInit {
     return null;
   }
 
-  cancelAction() {
+  clearAction() {
     this.actionState.set(ActionStates.NoSelection);
+    this.selectedAction.set(null);
   }
 
   endTurn() {
+    this.clearAction();
     const currentBattle = this.battle();
     if (currentBattle) {
       const updatedBattle = this.battleService.endTurn(currentBattle);
