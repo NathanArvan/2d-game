@@ -1,5 +1,3 @@
-import { Action } from "./action";
-
 export interface Class {
     id: number;
     name: string;
@@ -7,6 +5,6 @@ export interface Class {
 }
 
 export interface ClassAction {
-    action: Action
+    actionId: number;
     levelRestriction: number;
 }
