@@ -20,7 +20,7 @@ export class CharacterService {
     const classActions = this.getCharacterClassActions(character.levels);
     const itemsActions = this.getCharacterItemActions(character.items.map(item => item.templateId));
     const moveActions = this.getMoveActions();
-    return classActions.concat(itemsActions).concat(moveActions);
+    return [...classActions, ...itemsActions, ...moveActions];
   }
 
   getCharacterClassActions(levels: ClassLevels[]): Action[] {
@@ -39,7 +39,7 @@ export class CharacterService {
   }
 
   getMoveActions() : Action[] {
-    const moveAction = this.actionService.getActionById(0);
+    const moveAction = this.actionService.getActionById(1);
     if(moveAction){
       return [moveAction];
     } else{
