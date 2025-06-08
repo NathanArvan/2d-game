@@ -12,6 +12,7 @@ export const mockCharacters: Character[] = [
         mana: 0,
         position: { x: 5, y: 7},
         actionsPerTurn: 3,
+        items: [],
     },
     {
         id: 2,
@@ -21,6 +22,7 @@ export const mockCharacters: Character[] = [
         mana: 30,
         position: { x: 6, y: 9},
         actionsPerTurn: 3,
+        items: [],
     },
     {
         id: 3,
@@ -30,6 +32,7 @@ export const mockCharacters: Character[] = [
         mana: 20,
         position: { x: 8, y: 6},
         actionsPerTurn: 3,
+        items: [],
     },
     {
         id: 4,
@@ -39,6 +42,7 @@ export const mockCharacters: Character[] = [
         mana: 10,
         position: { x: 3, y: 2},
         actionsPerTurn: 3,
+        items: [],
     },
 ]
 
