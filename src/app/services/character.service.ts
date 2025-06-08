@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ClassService } from './class.service';
 import { ItemService } from './item.service';
 import { Character, ClassLevels } from '../models/character.model';
-import { Action } from '../models/action';
+import { Action } from '../models/action.model';
 import { ActionService } from './action.service';
 
 @Injectable({

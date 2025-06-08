@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { items } from '../permanent-data/items';
 import { ActionService } from './action.service';
-import { Action } from '../models/action';
+import { Action } from '../models/action.model';
 
 @Injectable({
   providedIn: 'root'

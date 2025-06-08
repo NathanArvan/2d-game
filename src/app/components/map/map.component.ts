@@ -1,10 +1,10 @@
 import { Component, computed, EventEmitter, input, OnInit, Output } from '@angular/core';
 import { Character } from '../../models/character.model';
 import { Location } from '../../models/location.model';
-import { Token, TokenType } from '../../models/token';
+import { Token, TokenType } from '../../models/token.model';
 import { ItemInstance } from '../../models/item.model';
 import { MapCellComponent } from "../map-cell/map-cell.component";
-import { Action } from '../../models/action';
+import { Action } from '../../models/action.model';
 
 @Component({
   selector: 'app-map',

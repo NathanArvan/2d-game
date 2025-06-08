@@ -1,5 +1,5 @@
-import { Action, ActionStates } from "../models/action";
-import { TokenType } from "../models/token";
+import { Action, ActionStates } from "../models/action.model";
+import { TokenType } from "../models/token.model";
 
 export const Actions: Action[] =    [{
     id: 1,

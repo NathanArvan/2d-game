@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions } from '../permanent-data/actions';
-import { Action } from '../models/action';
+import { Action } from '../models/action.model';
 
 @Injectable({
   providedIn: 'root'

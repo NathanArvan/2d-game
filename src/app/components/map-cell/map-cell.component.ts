@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { Token, TokenType } from '../../models/token';
+import { Token, TokenType } from '../../models/token.model';
 import { TokenComponent } from "../token/token.component";
 
 @Component({

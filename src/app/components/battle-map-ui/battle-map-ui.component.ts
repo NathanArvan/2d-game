@@ -4,7 +4,7 @@ import { GameService } from '../../services/game.service';
 import { Character } from '../../models/character.model';
 import { ItemInstance } from '../../models/item.model';
 import { Location } from '../../models/location.model';
-import { Action, ActionStates } from '../../models/action';
+import { Action, ActionStates } from '../../models/action.model';
 import { Battle } from '../../models/turn.model';
 import { BattleService } from '../../services/battle.service';
 import { CharacterService } from '../../services/character.service';

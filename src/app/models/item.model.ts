@@ -1,4 +1,4 @@
-import { Action } from "./action";
+import { Action } from "./action.model";
 
 export interface ItemInstance extends ItemTemplate{
     id: number;

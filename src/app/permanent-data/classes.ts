@@ -1,4 +1,4 @@
-import { Class } from "../models/class";
+import { Class } from "../models/class.model";
 
 export const Classes: Class[] = [
     {

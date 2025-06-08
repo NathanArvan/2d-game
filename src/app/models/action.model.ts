@@ -1,4 +1,4 @@
-import { TokenType } from "./token";
+import { TokenType } from "./token.model";
 
 export interface Action {
     id: number;

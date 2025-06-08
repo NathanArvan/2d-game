@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { ClassLevels } from '../models/character.model';
 import { ActionService } from './action.service';
 import { Classes } from '../permanent-data/classes';
-import { Class } from '../models/class';
-import { Action } from '../models/action';
+import { Class } from '../models/class.model';
+import { Action } from '../models/action.model';
 
 @Injectable({
   providedIn: 'root'
