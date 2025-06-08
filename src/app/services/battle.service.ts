@@ -11,7 +11,7 @@ export class BattleService {
 
   createBattle(characters: Character[]) : Battle {
     const battle: Battle = {
-      turnOrder: characters,
+      characterIdTurnOrder: characters.map(character => character.id),
       roundNumber: 1,
       currentTurn: 0
     };
@@ -20,7 +20,7 @@ export class BattleService {
 
   endTurn(battle: Battle) {
     battle.currentTurn++;
-    if (battle.currentTurn >= battle.turnOrder.length) {
+    if (battle.currentTurn >= battle.characterIdTurnOrder.length) {
       battle.currentTurn = 0; // Reset to the first character for
       battle.roundNumber++;
     }

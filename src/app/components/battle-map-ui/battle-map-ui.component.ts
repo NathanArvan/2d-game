@@ -37,12 +37,17 @@ export class BattleMapUiComponent implements OnInit {
   })
 
   currentCharacter = computed(() => {
-    //TODO: need to have current character update when characters signal changes, like when picking up an item
     const battleState = this.battle();
+    const characters = this.characters();
 
     if (battleState) {
       const currentTurn = battleState.currentTurn;
-      return battleState.turnOrder[currentTurn];
+      const currentTurnCharacterId = battleState.characterIdTurnOrder[currentTurn];
+      const character = characters.find(c => c.id === currentTurnCharacterId);
+      console.log(character)
+      if (character) {
+        return {...character};
+      }
     }
     return null;
   });
@@ -50,6 +55,7 @@ export class BattleMapUiComponent implements OnInit {
   characterActions = computed(() => {
     const character = this.currentCharacter();
     if (!character) return [];
+
     const actions = this.characterService.getCharacterActions(character);
     return actions;
   })
@@ -141,6 +147,7 @@ export class BattleMapUiComponent implements OnInit {
       const characters = this.characters();
       const characterIndex = characters.findIndex(character => character.id === currentCharacter.id);
       characters[characterIndex].items = [...characters[characterIndex].items, item]
+
       this.characters.set([...characters]);
     }
   }
@@ -185,7 +192,7 @@ export class BattleMapUiComponent implements OnInit {
     if (currentBattle) {
       const updatedBattle = this.battleService.endTurn(currentBattle);
       const newBattle: Battle = {
-        turnOrder: updatedBattle.turnOrder,
+        characterIdTurnOrder: updatedBattle.characterIdTurnOrder,
         roundNumber: updatedBattle.roundNumber,
         currentTurn: updatedBattle.currentTurn,
       }

@@ -1,7 +1,7 @@
 import { Character } from "./character.model";
 
 export interface Battle {
-    turnOrder: Character[];
+    characterIdTurnOrder: number[];
     roundNumber: number;
     currentTurn: number;
 }
