@@ -80,4 +80,18 @@ export class MapComponent implements OnInit{
     return cellContent.type === context.action.targetType;
   }
 
+  calculateIsObstacle(x: number, y: number): boolean {
+    const obstacles = this.location().obstacles;
+    for (const obstacle of obstacles) {
+      if (
+        x >= obstacle.startingX &&
+        x < obstacle.startingX + obstacle.width &&
+        y >= obstacle.startingY &&
+        y < obstacle.startingY + obstacle.length
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

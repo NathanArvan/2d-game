@@ -33,7 +33,7 @@ export class BattleMapUiComponent implements OnInit {
 
   characters = signal<Character[]>([]);
   items = signal<ItemInstance[]>([]);
-  location = signal<Location>({ id: 0, name: '', width: 10, height: 10 });
+  location = signal<Location>({ id: 0, name: '', width: 10, height: 10, obstacles: [] });
   actionState = signal<ActionStates>(ActionStates.NoSelection);
   actionStates = ActionStates;
   battleState = signal<TurnState | undefined>(undefined);
