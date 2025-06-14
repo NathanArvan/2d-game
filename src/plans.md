@@ -6,6 +6,8 @@ Plans:
 
 - create a map that is not square, more than 4 corners
 
+- handle map bigger than view space
+
 - validate actions (eg. range, targeting, etc)
 
 - workflow / organization for actions in the action toolbar (maybe rework action states)

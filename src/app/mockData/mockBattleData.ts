@@ -125,8 +125,8 @@ export const mockItems: ItemInstance[] = [
 ]
 
 export const mockMap: Location = {
-    width: 10,
-    height: 10,
+    width: 30,
+    height: 30,
     name: 'Grassland',
     id: 2
 }
