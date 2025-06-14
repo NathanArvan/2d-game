@@ -117,7 +117,7 @@ export class BattleMapUiComponent implements OnInit {
     }
 
     if(this.actionState() === ActionStates.AttackSelected){
-
+      this.processAttackAtTarget(event);
     }
 
     if(this.actionState() === ActionStates.InteractSelected){
@@ -147,8 +147,8 @@ export class BattleMapUiComponent implements OnInit {
        const characterList = this.characters();
        const targetCharacter =characterList[attackedCharacterIndex];
        let result: {message: string, updatedTarget: Character} | null = null;
-       const currentWeapon = this.currentCharacter()?.equippedWeapon;
-
+       //const currentWeapon = this.currentCharacter()?.equippedWeapon;
+      const currentWeapon = this.currentCharacter()?.items[0];
        if (this.selectedAction()?.id === 11) {
           result = this.attackService.attackBareHanded(targetCharacter);
        } else if (currentWeapon) {
