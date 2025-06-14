@@ -18,16 +18,17 @@
   </div>
 
 
-    <div class="map-container">
-      <app-map 
-        [characters]="characters()" 
-        [items]="items()" 
-        [location]="location()" 
-        [actionContext]="selectedActionContext()" 
-        (battleCellClicked)="onBattleCellClicked($event)"
-      ></app-map>
-    </div>
+  <div class="map-container">
+    <app-map 
+      [characters]="characters()" 
+      [items]="items()" 
+      [location]="location()" 
+      [actionContext]="selectedActionContext()" 
+      (battleCellClicked)="onBattleCellClicked($event)"
+    ></app-map>
+  </div>
 
+  <div>
     <div class="character-info-container card">
       <div>Characters</div>
       <div class="characterList">
@@ -38,7 +39,13 @@
         }
       </div>
     </div>
- </div>
+    <div>
+      @for(message of this.log(); track $index) {
+        <p>{{ message }}</p>
+      }
+    </div>
+  </div>
+</div>
 
 <div class="action-bar-container">
   @if (remainingActionsInTurn() > 0) {
@@ -95,9 +102,4 @@
     </div>
   }
   <button (click)="endTurn()">End Turn</button>
-</div>
-<div>
-  @for(message of this.log(); track $index) {
-    <p>{{ message }}</p>
-  }
 </div>
