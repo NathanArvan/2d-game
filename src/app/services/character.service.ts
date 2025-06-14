@@ -4,17 +4,25 @@ import { ItemService } from './item.service';
 import { Character, ClassLevels } from '../models/character.model';
 import { Action, ActionType } from '../models/action.model';
 import { ActionService } from './action.service';
+import { mockCharacters } from '../mockData/mockBattleData';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CharacterService {
 
+  private _characters = mockCharacters;
+
   constructor(
     private classService: ClassService,
     private itemService: ItemService,
     private actionService: ActionService
   ) { }
+
+  getCharacterById(characterId: number): Character | undefined {
+    return this._characters.find(character => character.id === characterId);
+  }
+
 
   getCharacterActions(character: Character): {actionType: ActionType, actions: Action[]}[] {
     const classActions = this.getCharacterClassActions(character.levels);

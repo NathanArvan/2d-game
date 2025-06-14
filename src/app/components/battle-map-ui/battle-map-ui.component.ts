@@ -10,6 +10,7 @@ import { CharacterService } from '../../services/character.service';
 import { ClassService } from '../../services/class.service';
 import { AttackService } from '../../services/attack.service';
 import { TurnState } from '../../models/turn.model';
+import { InitiativeBarComponent } from "../initiative-bar/initiative-bar.component";
 
 enum ActionStates {
   NoSelection,
@@ -24,7 +25,7 @@ enum ActionStates {
 @Component({
   selector: 'app-battle-map-ui',
   standalone: true,
-  imports: [MapComponent],
+  imports: [MapComponent, InitiativeBarComponent],
   templateUrl: './battle-map-ui.component.html',
   styleUrl: './battle-map-ui.component.css'
 })
@@ -35,7 +36,7 @@ export class BattleMapUiComponent implements OnInit {
   location = signal<Location>({ id: 0, name: '', width: 10, height: 10 });
   actionState = signal<ActionStates>(ActionStates.NoSelection);
   actionStates = ActionStates;
-  battleState = signal<TurnState | null>(null);
+  battleState = signal<TurnState | undefined>(undefined);
   remainingActionsInTurn = signal<number>(0);
   log = signal<string[]>([]);
   actionTypes = ActionType;
