@@ -45,8 +45,30 @@
     <div class="action-bar">
       @switch (actionState()) {
         @case (actionStates.NoSelection) {
-          @for (action of characterActions(); track $index) {
-            <button (click)="selectAction(action)">{{ action.name }}</button>
+          @for (group of characterActions(); track $index) {
+            @switch (group.actionType) {
+              @case (actionTypes.ATTACK) {
+                Attack Actions:
+                @for (action of group.actions; track $index) {
+                  <button (click)="selectAttack(action)">{{ action.name }}</button>
+                }
+              }
+              @case (actionTypes.MOVE) {
+                Move Actions:
+                @for (action of group.actions; track $index) {
+                  <button (click)="selectMove(action)">{{ action.name }}</button>
+                }
+              }
+              @case (actionTypes.INTERACT) {
+                Interact Actions:
+                @for (action of group.actions; track $index) {
+                  <button (click)="selectInteract(action)">{{ action.name }}</button>
+                }
+              }
+
+            }
+
+            
           }
         }
         @case (actionStates.MoveSelected) {

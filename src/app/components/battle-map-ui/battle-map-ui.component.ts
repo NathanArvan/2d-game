@@ -4,7 +4,7 @@ import { GameService } from '../../services/game.service';
 import { Character } from '../../models/character.model';
 import { ItemInstance } from '../../models/item.model';
 import { Location } from '../../models/location.model';
-import { Action, ActionStates } from '../../models/action.model';
+import { Action, ActionType } from '../../models/action.model';
 import { Battle } from '../../models/turn.model';
 import { BattleService } from '../../services/battle.service';
 import { CharacterService } from '../../services/character.service';
@@ -15,8 +15,9 @@ enum ActionStates {
   NoSelection,
   MoveSelected,
   AttackSelected,
-  ItemPickUpSelected,
+  InteractSelected,
   UseItemSelected,
+  BuffSelected,
 }
 
 
@@ -37,6 +38,8 @@ export class BattleMapUiComponent implements OnInit {
   battle = signal<Battle | null>(null);
   remainingActionsInTurn = signal<number>(0);
   log = signal<string[]>([]);
+  actionTypes = ActionType;
+
 
   selectedAction = signal<Action | null>(null);
   selectedActionContext = computed(() => {
@@ -122,7 +125,7 @@ export class BattleMapUiComponent implements OnInit {
       }
     }
 
-    if(this.actionState() === ActionStates.ItemPickUpSelected){
+    if(this.actionState() === ActionStates.InteractSelected){
       const itemIdAtPosition = this.getItemIdAtPosition(event.x,event.y)
       if(itemIdAtPosition) {
         this.pickUpItem(itemIdAtPosition);
@@ -132,10 +135,36 @@ export class BattleMapUiComponent implements OnInit {
     }
   }
 
-  selectAction(action: Action) {
-    this.actionState.set(action.state);
+
+
+  selectAttack(action: Action) {
+    this.actionState.set(ActionStates.AttackSelected);
     this.selectedAction.set(action);
   }
+
+  selectMove(action: Action) {
+    this.actionState.set(ActionStates.AttackSelected);
+    this.selectedAction.set(action);
+  }
+
+  selectInteract(action: Action) {
+    this.actionState.set(ActionStates.InteractSelected);
+    this.selectedAction.set(action);
+  }
+
+  selectUseItem(action: Action) {
+    this.actionState.set(ActionStates.UseItemSelected);
+    this.selectedAction.set(action);
+  }
+
+  selectBuff(action: Action) {
+    this.actionState.set(ActionStates.BuffSelected);
+    this.selectedAction.set(action);
+  }
+
+
+
+
 
   moveCharacter(x: number, y: number) {
     const currentCharacterId = this.currentCharacter()?.id
