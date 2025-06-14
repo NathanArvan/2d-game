@@ -1,4 +1,4 @@
-import { Action, ActionStates } from "../models/action.model";
+import { Action, ActionStates, ActionType } from "../models/action.model";
 import { TokenType } from "../models/token.model";
 
 export const Actions: Action[] =    [{
@@ -6,7 +6,7 @@ export const Actions: Action[] =    [{
     name: "Move",
     cost: 1,
     range: 3,
-    state: ActionStates.MoveSelected,
+    type: ActionType.MOVE,
     targetType: null,
 },
 {
@@ -14,7 +14,7 @@ export const Actions: Action[] =    [{
     name: "Melee Attack",
     cost: 1,
     range: 1,
-    state: ActionStates.AttackSelected,
+    type: ActionType.ATTACK,
     targetType: TokenType.CHARACTER,
 },
 {
@@ -22,7 +22,7 @@ export const Actions: Action[] =    [{
     name: "Pick up Item",
     cost: 1,
     range: 1,
-    state: ActionStates.ItemPickUpSelected,
+    type: ActionType.INTERACT,
     targetType: TokenType.ITEM,
 },
 {
@@ -30,7 +30,7 @@ export const Actions: Action[] =    [{
     name: "Drink Potion",
     cost: 1,
     range: 0,
-    state: ActionStates.UseItemSelected,
+    type: ActionType.USE_ITEM,
     targetType: null,
 },
 {
@@ -38,14 +38,14 @@ export const Actions: Action[] =    [{
     name: "Raise Shield",
     cost: 1,
     range: 0,
-    state: ActionStates.UseItemSelected,
+    type: ActionType.BUFF,
     targetType: null,
 },{
     id: 6,
     name: "Power Attack",
     cost: 2,
     range: 1,
-    state: ActionStates.AttackSelected,
+    type: ActionType.ATTACK,
     targetType: TokenType.CHARACTER
 },
 {
@@ -53,14 +53,14 @@ export const Actions: Action[] =    [{
     name: "Ether Shot",
     cost: 2,
     range: 3,
-    state: ActionStates.AttackSelected,
+    type: ActionType.ATTACK,
     targetType: TokenType.CHARACTER
 },{
     id: 8,
     name: "Sneak Attack",
     cost: 1,
     range: 1,
-    state: ActionStates.AttackSelected,
+    type: ActionType.ATTACK,
     targetType: TokenType.CHARACTER
 },
 {
@@ -68,14 +68,14 @@ export const Actions: Action[] =    [{
     name: "Ranged Attack",
     cost: 2,
     range: 3,
-    state: ActionStates.AttackSelected,
+    type: ActionType.ATTACK,
     targetType: TokenType.CHARACTER
 },{
     id: 10,
     name: "Encourage Ally",
     cost: 2,
     range: 3,
-    state: ActionStates.AttackSelected,
+    type: ActionType.BUFF,
     targetType: TokenType.CHARACTER
 }
 ];

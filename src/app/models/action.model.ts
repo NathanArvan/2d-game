@@ -6,7 +6,7 @@ export interface Action {
     name: string;
     cost: number;
     range: number;
-    state: ActionStates;
+    type: ActionType;
     targetType: TokenType | null;
 }
 
@@ -20,6 +20,8 @@ export enum ActionType {
   ATTACK,
   INTERACT,
   USE_ITEM,
+  BUFF,
+  DEBUFF,
 }
 
 
