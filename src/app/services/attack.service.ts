@@ -3,6 +3,7 @@ import { Attack } from '../models/action.model';
 import { Character } from '../models/character.model';
 import { DiceService } from './dice.service';
 import { DiceType } from '../models/dice.model';
+import { EffectType, ItemInstance } from '../models/item.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +12,20 @@ export class AttackService {
 
   constructor(private diceService: DiceService) { }
 
-  attackWithWeapon(target: Character): {updatedTarget : Character, message: string} {
+  attackWithWeapon(weapon: ItemInstance, target: Character): {updatedTarget : Character, message: string} {
+    const weaponEffect = weapon.effect;
+    if (!weaponEffect || weaponEffect.type !== EffectType.Damage) {
+      return { updatedTarget: target, message: 'Weapon does not have a damage effect' };
+    }
+
     const attackRoll = this.diceService.rollDie(DiceType.D20);
     const armorClass = target.armorClass;
     const attackIsSuccessful = attackRoll >= armorClass;
     if (!attackIsSuccessful) {
       return { updatedTarget: target, message: 'Attack failed' };
     }
-
-    const damage = this.diceService.rollDie(DiceType.D8);
+    
+    const damage = this.diceService.rollDice(weaponEffect.amount.diceType, weaponEffect.amount.diceCount);
     target.currentHealth = target.currentHealth - damage;
     return { updatedTarget: target, message: `You attacked ${target.name} for ${damage} damage` };
   }
