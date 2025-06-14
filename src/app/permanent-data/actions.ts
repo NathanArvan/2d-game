@@ -77,5 +77,12 @@ export const Actions: Action[] =    [{
     range: 3,
     type: ActionType.BUFF,
     targetType: TokenType.CHARACTER
-}
+}, {
+    id: 11,
+    name: "Bare Handed Attack",
+    cost: 1,
+    range: 1,
+    type: ActionType.ATTACK,
+    targetType: TokenType.CHARACTER
+},
 ];

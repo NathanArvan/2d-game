@@ -50,11 +50,15 @@ export class CharacterService {
   }
 
   getCommonActions() : Action[] {
-    const moveAction = this.actionService.getActionById(3);
-    if(moveAction){
-      return [moveAction];
-    } else{
-      return [];
+    let actions: Action[] = [];
+    const pickUpItem = this.actionService.getActionById(3);
+    if(pickUpItem){
+      actions.push(pickUpItem)
     }
+    const unarmedAttack = this.actionService.getActionById(11);
+    if(unarmedAttack){
+      actions.push(unarmedAttack)
+    }
+    return actions;
   }
 }
