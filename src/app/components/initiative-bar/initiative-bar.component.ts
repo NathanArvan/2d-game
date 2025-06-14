@@ -34,7 +34,7 @@ export class InitiativeBarComponent  {
       const roundLength = turnState.characterIdTurnOrder.length;
       const totalLength = roundLength * iterations;
 
-      for (let i = turnState.currentTurn; i < totalLength; i++) {
+      for (let i = turnState.currentTurn; i < totalLength + turnState.currentTurn; i++) {
         const characterId = this.battleService.getCharacterIdAtTurn(turnState, i);
         if(characterId) {
           const character = this.characterService.getCharacterById(characterId);
