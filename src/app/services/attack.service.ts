@@ -12,41 +12,56 @@ export class AttackService {
 
   constructor(private diceService: DiceService) { }
 
-  attackWithWeapon(weapon: ItemInstance, target: Character): {updatedTarget : Character, message: string} {
+  attackWithWeapon(attacker: Character, weapon: ItemInstance, target: Character): {updatedTarget : Character, message: string} {
     let message = '';
     const weaponEffect = weapon.effect;
     if (!weaponEffect || weaponEffect.type !== EffectType.Damage) {
-      return { updatedTarget: target, message: 'Weapon does not have a damage effect' };
+      return { updatedTarget: target, message: 'Weapon does not have a damage effect.' };
     }
     const attackRoll = this.diceService.rollDie(DiceType.D20);
     const armorClass = target.armorClass;
-    message = this.appendMessage(message, `Rolled a ${attackRoll} against targets armour class of ${armorClass}`)
-    const attackIsSuccessful = attackRoll >= armorClass;
+    const strengthModifier = attacker.stats.strength;
+    const attackTotal = attackRoll + strengthModifier;
+
+    message = this.appendMessage(message, `Rolled a ${attackRoll} plus ${strengthModifier} modifier for a total of ${attackTotal} against targets armour class of ${armorClass}.`);
+
+    const attackIsSuccessful = attackTotal >= armorClass;
+
     if (!attackIsSuccessful) {
       message = this.appendMessage(message, 'Attack failed')
       return { updatedTarget: target, message };
     }
     
-    const damage = this.diceService.rollDice(weaponEffect.amount.diceType, weaponEffect.amount.diceCount);
+    const damageRoll = this.diceService.rollDice(weaponEffect.amount.diceType, weaponEffect.amount.diceCount);
+    const damage = damageRoll + strengthModifier;
+    message = this.appendMessage(message, `Rolled ${damageRoll} plus ${attacker.name}'s strength (${strengthModifier}) for ${damage} damage.`);
+
     target.currentHealth = target.currentHealth - damage;
-    message = this.appendMessage(message, `You attacked ${target.name} for ${damage} damage`);
+    message = this.appendMessage(message, `${attacker.name} attacked ${target.name} for ${damage} damage.`);
     return { updatedTarget: target, message };
   }
 
-  attackBareHanded(target: Character): {updatedTarget : Character, message: string} {
+  attackBareHanded(attacker: Character, target: Character): {updatedTarget : Character, message: string} {
     let message = '';
     const attackRoll = this.diceService.rollDie(DiceType.D20);
     const armorClass = target.armorClass;
-    message = this.appendMessage(message, `Rolled a ${attackRoll} against targets armour class of ${armorClass}`)
-    const attackIsSuccessful = attackRoll >= armorClass;
+    const strengthModifier = attacker.stats.strength;
+    const attackTotal = attackRoll + strengthModifier;
+
+    message = this.appendMessage(message, `Rolled a ${attackRoll} plus ${strengthModifier} modifier for a total of ${attackTotal} against targets armour class of ${armorClass}.`)
+
+    const attackIsSuccessful = attackTotal >= armorClass;
     if (!attackIsSuccessful) {
       message = this.appendMessage(message, 'Attack failed')
       return { updatedTarget: target, message };
     }
     
-    const damage = this.diceService.rollDice(DiceType.D4, 1);
+    const damageRoll =  this.diceService.rollDice(DiceType.D4, 1);
+    const damage = damageRoll + strengthModifier;
+    message = this.appendMessage(message, `Rolled ${damageRoll} plus ${attacker.name}'s strength (${strengthModifier}) for ${damage} damage.`);
+
     target.currentHealth = target.currentHealth - damage;
-    message = this.appendMessage(message, `You attacked ${target.name} for ${damage} damage`);
+    message = this.appendMessage(message, `${attacker.name} attacked ${target.name} for ${damage} damage.`);
     return { updatedTarget: target, message };
   }
 

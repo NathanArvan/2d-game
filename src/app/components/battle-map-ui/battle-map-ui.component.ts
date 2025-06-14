@@ -143,16 +143,17 @@ export class BattleMapUiComponent implements OnInit {
 
   attackCharacter(characterId: number) {
     const attackedCharacterIndex = this.characters().findIndex(character => character.id === characterId);
-    if (attackedCharacterIndex !== -1) {
+    const currentCharacter = this.currentCharacter();
+    if (attackedCharacterIndex !== -1 && currentCharacter) {
        const characterList = this.characters();
        const targetCharacter =characterList[attackedCharacterIndex];
        let result: {message: string, updatedTarget: Character} | null = null;
        //const currentWeapon = this.currentCharacter()?.equippedWeapon;
       const currentWeapon = this.currentCharacter()?.items[0];
-       if (this.selectedAction()?.id === 11) {
-          result = this.attackService.attackBareHanded(targetCharacter);
+      if (this.selectedAction()?.id === 11) {
+          result = this.attackService.attackBareHanded(currentCharacter, targetCharacter);
        } else if (currentWeapon) {
-          result = this.attackService.attackWithWeapon(currentWeapon, targetCharacter);
+          result = this.attackService.attackWithWeapon(currentCharacter, currentWeapon, targetCharacter);
        }
        if (!result) return;
        
@@ -227,6 +228,7 @@ export class BattleMapUiComponent implements OnInit {
       characters[characterIndex].items = [...characters[characterIndex].items, item]
 
       this.characters.set([...characters]);
+      this.updateLog(`Picked up ${item.name} from the ground.`)
     }
   }
 
