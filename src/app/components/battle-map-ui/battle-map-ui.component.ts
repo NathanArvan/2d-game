@@ -178,7 +178,7 @@ export class BattleMapUiComponent implements OnInit {
   }
 
   selectMove(action: Action) {
-    this.actionState.set(ActionStates.AttackSelected);
+    this.actionState.set(ActionStates.MoveSelected);
     this.selectedAction.set(action);
   }
 
