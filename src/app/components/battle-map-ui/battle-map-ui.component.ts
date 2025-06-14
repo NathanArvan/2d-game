@@ -117,12 +117,7 @@ export class BattleMapUiComponent implements OnInit {
     }
 
     if(this.actionState() === ActionStates.AttackSelected){
-      const characterIdAtPosition = this.getCharacterIdAtPosition(event.x,event.y)
-      if(characterIdAtPosition) {
-        this.attackCharacter(characterIdAtPosition)
-        this.clearAction();
-        this.remainingActionsInTurn.set(this.remainingActionsInTurn() - 1);
-      }
+
     }
 
     if(this.actionState() === ActionStates.InteractSelected){
@@ -133,6 +128,46 @@ export class BattleMapUiComponent implements OnInit {
         this.remainingActionsInTurn.set(this.remainingActionsInTurn() - 1);
       }
     }
+  }
+
+  processAttackAtTarget(event: {x: number, y: number}): void {
+    const characterIdAtPosition = this.getCharacterIdAtPosition(event.x,event.y)
+      if(characterIdAtPosition) {
+        this.attackCharacter(characterIdAtPosition)
+        this.clearAction();
+        this.remainingActionsInTurn.set(this.remainingActionsInTurn() - 1);
+    } else {
+      this.updateLog('No character at position')
+    }
+  }
+
+  attackCharacter(characterId: number) {
+    const attackedCharacterIndex = this.characters().findIndex(character => character.id === characterId);
+    if (attackedCharacterIndex !== -1) {
+       const characterList = this.characters();
+       const targetCharacter =characterList[attackedCharacterIndex];
+       let result: {message: string, updatedTarget: Character} | null = null;
+       const currentWeapon = this.currentCharacter()?.equippedWeapon;
+
+       if (this.selectedAction()?.id === 11) {
+          result = this.attackService.attackBareHanded(targetCharacter);
+       } else if (currentWeapon) {
+          result = this.attackService.attackWithWeapon(currentWeapon, targetCharacter);
+       }
+       if (!result) return;
+       
+       characterList[attackedCharacterIndex] = result.updatedTarget;
+       this.characters.set([...characterList]);
+       this.updateLog(result.message);
+    }
+  }
+
+  getCharacterIdAtPosition(x: number, y: number): number | null {
+    const character = this.characters().find(character => character.position.x === x && character.position.y === y)
+    if (character) {
+      return character.id;
+    }
+    return null;
   }
 
 
@@ -203,28 +238,6 @@ export class BattleMapUiComponent implements OnInit {
     return null; 
   }
 
-
-
-  attackCharacter(characterId: number) {
-    const attackedCharacterIndex = this.characters().findIndex(character => character.id === characterId);
-    if (attackedCharacterIndex !== -1) {
-       const characterList = this.characters();
-       const targetCharacter =characterList[attackedCharacterIndex];
-       const result = this.attackService.attackWithWeapon(targetCharacter);
-       characterList[attackedCharacterIndex] = result.updatedTarget;
-       this.characters.set([...characterList]);
-       this.updateLog(result.message);
-    }
-  }
-
-  getCharacterIdAtPosition(x: number, y: number): number | null {
-    const character = this.characters().find(character => character.position.x === x && character.position.y === y)
-    if (character) {
-      return character.id;
-    }
-    return null;
-  }
-
   clearAction() {
     this.actionState.set(ActionStates.NoSelection);
     this.selectedAction.set(null);
@@ -253,8 +266,4 @@ export class BattleMapUiComponent implements OnInit {
     this.log.set(log);
   }
   
-
-
-
-
 }
