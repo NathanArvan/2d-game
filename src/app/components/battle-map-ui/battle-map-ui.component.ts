@@ -11,6 +11,15 @@ import { CharacterService } from '../../services/character.service';
 import { ClassService } from '../../services/class.service';
 import { AttackService } from '../../services/attack.service';
 
+enum ActionStates {
+  NoSelection,
+  MoveSelected,
+  AttackSelected,
+  ItemPickUpSelected,
+  UseItemSelected,
+}
+
+
 @Component({
   selector: 'app-battle-map-ui',
   standalone: true,

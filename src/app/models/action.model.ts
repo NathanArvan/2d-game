@@ -23,13 +23,3 @@ export enum ActionType {
   BUFF,
   DEBUFF,
 }
-
-
-
-export enum ActionStates {
-  NoSelection,
-  MoveSelected,
-  AttackSelected,
-  ItemPickUpSelected,
-  UseItemSelected,
-}
