@@ -18,7 +18,15 @@ export const mockCharacters: Character[] = [
         levels: [{
             level: 1,
             classId:1,
-        }]
+        }],
+        stats: {
+            strength: 2,
+            dexterity: 0,
+            constitution: 0,
+            intelligence: 0,
+            wisdom: 0,
+            charisma: 0
+        }
     },
     {
         id: 2,
@@ -35,7 +43,15 @@ export const mockCharacters: Character[] = [
         levels: [{
             level: 1,
             classId:2,
-        }]
+        }],
+        stats: {
+            strength: 1,
+            dexterity: 0,
+            constitution: 0,
+            intelligence: 0,
+            wisdom: 0,
+            charisma: 0
+        }
     },
     {
         id: 3,
@@ -51,7 +67,15 @@ export const mockCharacters: Character[] = [
         levels: [{
             level: 1,
             classId:3,
-        }]
+        }],
+        stats: {
+            strength: 0,
+            dexterity: 2,
+            constitution: 0,
+            intelligence: 0,
+            wisdom: 0,
+            charisma: 0
+        }
     },
     {
         id: 4,
@@ -67,7 +91,15 @@ export const mockCharacters: Character[] = [
         levels: [{
             level: 1,
             classId:4,
-        }]
+        }],
+        stats: {
+            strength: 1,
+            dexterity: 0,
+            constitution: 0,
+            intelligence: 0,
+            wisdom: 0,
+            charisma: 0
+        }
     },
 ]
 

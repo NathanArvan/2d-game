@@ -12,9 +12,19 @@ export interface Character {
     items: ItemInstance[];
     equippedWeapon: ItemInstance | null;
     levels: ClassLevels[];
+    stats: Stats;
 }
 
 export interface ClassLevels {
     level: number;
     classId: number;
+}
+
+export interface Stats {
+    strength: number;
+    dexterity: number;
+    constitution: number;
+    intelligence: number;
+    wisdom: number;
+    charisma: number;
 }
