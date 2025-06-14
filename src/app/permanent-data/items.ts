@@ -10,8 +10,8 @@ export const items: ItemTemplate[] = [
         effect: {
             type: EffectType.Healing,
             amount: {
-                diceCount: 1,
-                diceType: DiceType.D8
+                quantity: 1,
+                type: DiceType.D8
             }
         }
         
@@ -25,8 +25,8 @@ export const items: ItemTemplate[] = [
         effect: {
             type: EffectType.Damage,
             amount: {
-                diceCount: 1,
-                diceType: DiceType.D8
+                quantity: 1,
+                type: DiceType.D8
             }
         }
     },

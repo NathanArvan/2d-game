@@ -1,5 +1,5 @@
 import { Action } from "./action.model";
-import { DiceType } from "./dice.model";
+import {  DieRoll } from "./dice.model";
 
 export interface ItemInstance extends ItemTemplate{
     id: number;
@@ -16,10 +16,7 @@ export interface ItemTemplate {
 
 export interface Effect {
     type: EffectType;
-    amount: {
-        diceCount: number;
-        diceType: DiceType;
-    }
+    amount: DieRoll;
 }
 
 export enum EffectType {

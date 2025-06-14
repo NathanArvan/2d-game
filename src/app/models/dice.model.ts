@@ -6,3 +6,8 @@ export enum DiceType {
     D12 = 12,
     D20 = 20
 }
+
+export interface DieRoll {
+    type: DiceType;
+    quantity: number;
+}
