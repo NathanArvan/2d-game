@@ -1,4 +1,4 @@
-import { Action, ActionStates, ActionType } from "../models/action.model";
+import { Action, ActionType } from "../models/action.model";
 import { TokenType } from "../models/token.model";
 
 export const Actions: Action[] =    [{
