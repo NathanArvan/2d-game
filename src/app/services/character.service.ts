@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ClassService } from './class.service';
 import { ItemService } from './item.service';
 import { Character, ClassLevels } from '../models/character.model';
-import { Action } from '../models/action.model';
+import { Action, ActionType } from '../models/action.model';
 import { ActionService } from './action.service';
 
 @Injectable({
@@ -16,13 +16,19 @@ export class CharacterService {
     private actionService: ActionService
   ) { }
 
-  getCharacterActions(character: Character): Action[] {
+  getCharacterActions(character: Character): {actionType: ActionType, actions: Action[]}[] {
     const classActions = this.getCharacterClassActions(character.levels);
     const itemIds = character.items.map(item => item.templateId);
     const itemsActions = this.getCharacterItemActions(itemIds);
     const moveActions = this.getMoveActions();
     const commonActions = this.getCommonActions();
-    return [...classActions, ...itemsActions, ...moveActions, ...commonActions];
+    const totalActions = classActions.concat(itemsActions).concat(moveActions).concat(commonActions);
+    const attacks = {actionType: ActionType.ATTACK, actions: totalActions.filter(action => action.type === ActionType.ATTACK)};
+    const moves = {actionType: ActionType.MOVE, actions: totalActions.filter(action => action.type === ActionType.MOVE)};
+    const buffs = {actionType: ActionType.BUFF, actions: totalActions.filter(action => action.type === ActionType.BUFF)};
+    const interacts = {actionType: ActionType.INTERACT, actions: totalActions.filter(action => action.type === ActionType.INTERACT)};
+    const uses = {actionType: ActionType.USE_ITEM, actions: totalActions.filter(action => action.type === ActionType.USE_ITEM)};
+    return [attacks, moves, buffs, interacts, uses];
   }
 
   getCharacterClassActions(levels: ClassLevels[]): Action[] {
