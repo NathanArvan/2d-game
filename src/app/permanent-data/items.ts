@@ -21,7 +21,7 @@ export const items: ItemTemplate[] = [
         templateId: 2,
         name: 'Sword',
         description: 'A sharp sword that deals damage to enemies.',
-        actionIds: [1],
+        actionIds: [2],
         effect: {
             type: EffectType.Damage,
             amount: {
