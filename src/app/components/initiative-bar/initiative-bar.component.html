@@ -1,0 +1,8 @@
+<div class="initiative-container">
+    <h4>Initiative:</h4>
+    <div class="initiative-bar">
+    @for (character of initiativeList(); track $index) {
+        <div class="initiative-item">{{ character.name }}</div>
+    }
+    </div>
+</div>

@@ -1,10 +1,14 @@
 <!-- This will be the top level view a player see when they are in a battle -->
+<div class="initiative-bar-container">
+  <app-initiative-bar [turnState]="battleState()"></app-initiative-bar>
+</div> 
+
  <div class="battle-map-ui-container">
 
   <div class="left-content-container">
     <div class="card">
-      <div>Round: {{ battle()?.roundNumber }}</div>
-      <div>Turn: {{ battle()?.currentTurn  }}</div>
+      <div>Round: {{ battleState()?.roundNumber }}</div>
+      <div>Turn: {{ battleState()?.currentTurn  }}</div>
     </div>
 
     <div class="card">

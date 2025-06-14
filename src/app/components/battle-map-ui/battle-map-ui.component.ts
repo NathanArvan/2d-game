@@ -5,11 +5,12 @@ import { Character } from '../../models/character.model';
 import { ItemInstance } from '../../models/item.model';
 import { Location } from '../../models/location.model';
 import { Action, ActionType } from '../../models/action.model';
-import { Battle } from '../../models/turn.model';
 import { BattleService } from '../../services/battle.service';
 import { CharacterService } from '../../services/character.service';
 import { ClassService } from '../../services/class.service';
 import { AttackService } from '../../services/attack.service';
+import { TurnState } from '../../models/turn.model';
+import { InitiativeBarComponent } from "../initiative-bar/initiative-bar.component";
 
 enum ActionStates {
   NoSelection,
@@ -24,7 +25,7 @@ enum ActionStates {
 @Component({
   selector: 'app-battle-map-ui',
   standalone: true,
-  imports: [MapComponent],
+  imports: [MapComponent, InitiativeBarComponent],
   templateUrl: './battle-map-ui.component.html',
   styleUrl: './battle-map-ui.component.css'
 })
@@ -35,7 +36,7 @@ export class BattleMapUiComponent implements OnInit {
   location = signal<Location>({ id: 0, name: '', width: 10, height: 10 });
   actionState = signal<ActionStates>(ActionStates.NoSelection);
   actionStates = ActionStates;
-  battle = signal<Battle | null>(null);
+  battleState = signal<TurnState | undefined>(undefined);
   remainingActionsInTurn = signal<number>(0);
   log = signal<string[]>([]);
   actionTypes = ActionType;
@@ -52,7 +53,7 @@ export class BattleMapUiComponent implements OnInit {
   })
 
   currentCharacter = computed(() => {
-    const battleState = this.battle();
+    const battleState = this.battleState();
     const characters = this.characters();
 
     if (battleState) {
@@ -105,7 +106,7 @@ export class BattleMapUiComponent implements OnInit {
     if (location) {
       this.location.set(location); 
     }
-    this.battle.set(this.battleService.createBattle(this.characters()));
+    this.battleState.set(this.battleService.createBattle(this.characters().map(ch => ch.id)));
     this.remainingActionsInTurn.set(this.currentCharacter()?.actionsPerTurn ?? 0);
   }
 
@@ -247,15 +248,15 @@ export class BattleMapUiComponent implements OnInit {
 
   endTurn() {
     this.clearAction();
-    const currentBattle = this.battle();
+    const currentBattle = this.battleState();
     if (currentBattle) {
       const updatedBattle = this.battleService.endTurn(currentBattle);
-      const newBattle: Battle = {
+      const newBattle: TurnState = {
         characterIdTurnOrder: updatedBattle.characterIdTurnOrder,
         roundNumber: updatedBattle.roundNumber,
         currentTurn: updatedBattle.currentTurn,
       }
-      this.battle.set(newBattle);
+      this.battleState.set(newBattle);
       this.remainingActionsInTurn.set(this.currentCharacter()?.actionsPerTurn ?? 3);
     }      
   }
