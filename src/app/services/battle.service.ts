@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Character } from '../models/character.model';
-import { Battle } from '../models/turn.model';
+import { TurnState } from '../models/turn.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,16 +9,16 @@ export class BattleService {
 
   constructor() { }
 
-  createBattle(characters: Character[]) : Battle {
-    const battle: Battle = {
-      characterIdTurnOrder: characters.map(character => character.id),
+  createBattle(characterIds: number[]) : TurnState {
+    const battle: TurnState = {
+      characterIdTurnOrder: characterIds,
       roundNumber: 1,
       currentTurn: 0
     };
     return battle;
   }
 
-  endTurn(battle: Battle) {
+  endTurn(battle: TurnState) {
     battle.currentTurn++;
     if (battle.currentTurn >= battle.characterIdTurnOrder.length) {
       battle.currentTurn = 0; // Reset to the first character for
@@ -27,5 +27,14 @@ export class BattleService {
     return battle;
   }
 
-
+  getCharacterIdAtTurn(battle: TurnState, turnIndex: number): number | undefined {
+    const characterIds = battle.characterIdTurnOrder;
+    if (turnIndex < characterIds.length) {
+      const characterId = characterIds[turnIndex];
+      return characterId;
+    } else {
+      const remained = turnIndex % characterIds.length; 
+      return characterIds[remained];
+    }
+  }
 }

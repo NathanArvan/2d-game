@@ -105,7 +105,7 @@ export class BattleMapUiComponent implements OnInit {
     if (location) {
       this.location.set(location); 
     }
-    this.battleState.set(this.battleService.createBattle(this.characters()));
+    this.battleState.set(this.battleService.createBattle(this.characters().map(ch => ch.id)));
     this.remainingActionsInTurn.set(this.currentCharacter()?.actionsPerTurn ?? 0);
   }
 
