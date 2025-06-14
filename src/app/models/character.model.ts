@@ -6,6 +6,7 @@ export interface Character {
     currentHealth: number;
     health: number;
     mana: number;
+    armorClass: number;
     position: { x: number; y: number };
     actionsPerTurn: number;
     items: ItemInstance[];
