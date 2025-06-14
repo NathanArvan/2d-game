@@ -48,27 +48,35 @@
           @for (group of characterActions(); track $index) {
             @switch (group.actionType) {
               @case (actionTypes.ATTACK) {
-                Attack Actions:
-                @for (action of group.actions; track $index) {
-                  <button (click)="selectAttack(action)">{{ action.name }}</button>
-                }
+                <div>
+                  <div>Attack Actions:</div>
+                  <div class="action-group">
+                  @for (action of group.actions; track $index) {
+                    <button (click)="selectAttack(action)">{{ action.name }}</button>
+                  }
+                  </div>
+                </div>
               }
               @case (actionTypes.MOVE) {
-                Move Actions:
-                @for (action of group.actions; track $index) {
-                  <button (click)="selectMove(action)">{{ action.name }}</button>
-                }
+                <div>
+                  <div>Move Actions:</div>
+                  <div class="action-group">
+                  @for (action of group.actions; track $index) {
+                    <button (click)="selectMove(action)">{{ action.name }}</button>
+                  }
+                  </div>
+                </div>
               }
               @case (actionTypes.INTERACT) {
-                Interact Actions:
-                @for (action of group.actions; track $index) {
-                  <button (click)="selectInteract(action)">{{ action.name }}</button>
-                }
+                <div>
+                  <div>Interact Actions:</div>
+                  <div class="action-group">@for (action of group.actions; track $index) {
+                    <button (click)="selectInteract(action)">{{ action.name }}</button>
+                  }
+                  </div>
+                </div>
               }
-
             }
-
-            
           }
         }
         @case (actionStates.MoveSelected) {
