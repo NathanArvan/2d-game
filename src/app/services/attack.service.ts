@@ -11,7 +11,7 @@ export class AttackService {
 
   constructor(private diceService: DiceService) { }
 
-  attackWithWeapon(attack: Attack, target: Character): {updatedTarget : Character, message: string} {
+  attackWithWeapon(target: Character): {updatedTarget : Character, message: string} {
     const attackRoll = this.diceService.rollDie(DiceType.D20);
     const armorClass = target.armorClass;
     const attackIsSuccessful = attackRoll >= armorClass;
@@ -20,10 +20,10 @@ export class AttackService {
     }
 
     const damage = this.diceService.rollDie(DiceType.D8);
-    target.health = target.health - damage;
+    target.currentHealth = target.currentHealth - damage;
     return { updatedTarget: target, message: `You attacked ${target.name} for ${damage} damage` };
   }
-  
+
   drinkHealingPotion(target: Character): {updatedTarget : Character, message: string} {
     const healing = this.diceService.rollDice(DiceType.D4, 2) + 2;
     target.health += healing;

@@ -9,6 +9,7 @@ import { Battle } from '../../models/turn.model';
 import { BattleService } from '../../services/battle.service';
 import { CharacterService } from '../../services/character.service';
 import { ClassService } from '../../services/class.service';
+import { AttackService } from '../../services/attack.service';
 
 @Component({
   selector: 'app-battle-map-ui',
@@ -26,6 +27,8 @@ export class BattleMapUiComponent implements OnInit {
   actionStates = ActionStates;
   battle = signal<Battle | null>(null);
   remainingActionsInTurn = signal<number>(0);
+  log = signal<string[]>([]);
+
   selectedAction = signal<Action | null>(null);
   selectedActionContext = computed(() => {
     const action = this.selectedAction();
@@ -77,6 +80,8 @@ export class BattleMapUiComponent implements OnInit {
     private battleService: BattleService,
     private characterService: CharacterService,
     private classService: ClassService,
+    private attackService: AttackService,
+
   ) { 
     this.gameService.initializeMockData();
   }
@@ -166,11 +171,12 @@ export class BattleMapUiComponent implements OnInit {
     const attackedCharacterIndex = this.characters().findIndex(character => character.id === characterId);
     if (attackedCharacterIndex !== -1) {
        const characterList = this.characters();
-       characterList[attackedCharacterIndex].currentHealth -= 10;
+       const targetCharacter =characterList[attackedCharacterIndex];
+       const result = this.attackService.attackWithWeapon(targetCharacter);
+       characterList[attackedCharacterIndex] = result.updatedTarget;
        this.characters.set([...characterList]);
+       this.updateLog(result.message);
     }
-
-
   }
 
   getCharacterIdAtPosition(x: number, y: number): number | null {
@@ -200,5 +206,17 @@ export class BattleMapUiComponent implements OnInit {
       this.remainingActionsInTurn.set(this.currentCharacter()?.actionsPerTurn ?? 3);
     }      
   }
+
+  updateLog(message: string) {
+    const log = this.log();
+    if (log) {
+      log.push( message );
+    }
+    this.log.set(log);
+  }
+  
+
+
+
 
 }

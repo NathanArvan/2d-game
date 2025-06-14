@@ -66,3 +66,8 @@
   }
   <button (click)="endTurn()">End Turn</button>
 </div>
+<div>
+  @for(message of this.log(); track $index) {
+    <p>{{ message }}</p>
+  }
+</div>
