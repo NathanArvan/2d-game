@@ -10,6 +10,7 @@ export interface Character {
     position: { x: number; y: number };
     actionsPerTurn: number;
     items: ItemInstance[];
+    equippedWeapon: ItemInstance | null;
     levels: ClassLevels[];
 }
 

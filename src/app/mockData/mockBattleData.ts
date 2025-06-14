@@ -1,4 +1,3 @@
-import { Action, ActionStates } from "../models/action.model";
 import { Character } from "../models/character.model";
 import { ItemInstance } from "../models/item.model";
 import { Location } from "../models/location.model";
@@ -15,6 +14,7 @@ export const mockCharacters: Character[] = [
         position: { x: 5, y: 7},
         actionsPerTurn: 3,
         items: [],
+        equippedWeapon: null,
         levels: [{
             level: 1,
             classId:1,
@@ -30,6 +30,8 @@ export const mockCharacters: Character[] = [
         position: { x: 6, y: 9},
         actionsPerTurn: 3,
         items: [],
+        
+        equippedWeapon: null,
         levels: [{
             level: 1,
             classId:2,
@@ -45,6 +47,7 @@ export const mockCharacters: Character[] = [
         position: { x: 8, y: 6},
         actionsPerTurn: 3,
         items: [],
+        equippedWeapon: null,
         levels: [{
             level: 1,
             classId:3,
@@ -60,6 +63,7 @@ export const mockCharacters: Character[] = [
         position: { x: 3, y: 2},
         actionsPerTurn: 3,
         items: [],
+        equippedWeapon: null,
         levels: [{
             level: 1,
             classId:4,
