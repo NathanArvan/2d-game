@@ -4,10 +4,12 @@ export const Classes: Class[] = [
     {
         id: 1,
         name: "Warrior",
-        actions: [{
-            actionId: 6,
-            levelRestriction: 1
-        }]
+        actions: [
+        //     {
+        //     actionId: 6,
+        //     levelRestriction: 1
+        // }
+    ]
     },
     {
         id: 2,
