@@ -1,6 +1,6 @@
 import { Character } from "./character.model";
 
-export interface Battle {
+export interface TurnState {
     characterIdTurnOrder: number[];
     roundNumber: number;
     currentTurn: number;
