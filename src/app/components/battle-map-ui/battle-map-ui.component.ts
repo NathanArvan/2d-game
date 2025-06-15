@@ -174,14 +174,33 @@ export class BattleMapUiComponent implements OnInit {
 
   processAttackAtTarget(event: {x: number, y: number}): void {
     const characterIdAtPosition = this.getCharacterIdAtPosition(event.x,event.y)
-      if(characterIdAtPosition) {
+    const attackIsValid = this.attackIsValid(event,characterIdAtPosition)
+    if(attackIsValid && characterIdAtPosition) {
         this.attackCharacter(characterIdAtPosition)
         this.clearAction();
         this.remainingActionsInTurn.set(this.remainingActionsInTurn() - 1);
-    } else {
-      this.updateLog('No character at position')
     }
   }
+
+  attackIsValid(event: {x: number, y: number}, id : number | null): boolean {
+    if (id === null) {
+      this.updateLog('No character at position')
+      return false;
+    }
+    const currentCharacter = this.currentCharacter();
+    const currentAction = this.selectedAction();
+    if (!currentCharacter || !currentAction) {
+      return false;
+    }
+    const distanceToTarget = this.mapService.getDistanceInSquares(currentCharacter.position, event);
+    const isWithinRange = distanceToTarget <= currentAction.range;
+    if(!isWithinRange){
+        this.updateLog('Greater than character attack range.');
+        return false;
+    }
+    return true;
+  }
+
 
   attackCharacter(characterId: number) {
     const attackedCharacterIndex = this.characters().findIndex(character => character.id === characterId);
