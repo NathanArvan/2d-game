@@ -5,6 +5,7 @@ import { Token, TokenType } from '../../models/token.model';
 import { ItemInstance } from '../../models/item.model';
 import { MapCellComponent } from "../map-cell/map-cell.component";
 import { Action } from '../../models/action.model';
+import { MapService } from '../../services/map.service';
 
 @Component({
   selector: 'app-map',
@@ -18,6 +19,8 @@ export class MapComponent implements OnInit{
   items = input<ItemInstance[]>([]);
   location = input.required<Location>();
   actionContext = input<{action: Action, position: { x:number,y:number}} | null>(null);
+  startingPoint = input<{ x:number,y:number} | null>(null);
+  endingPoint = input<{ x:number,y:number} | null>(null);
 
   @Output() battleCellClicked = new EventEmitter<{ x:number,y:number}>();
   
@@ -36,7 +39,7 @@ export class MapComponent implements OnInit{
     return grid;
   })
 
-  constructor() { }
+  constructor(private mapService: MapService) { }
 
    ngOnInit(): void {
     this.initializeGrid();
@@ -94,4 +97,13 @@ export class MapComponent implements OnInit{
     }
     return false;
   }
+
+  calculateIsInLine(x: number, y: number): boolean {
+    const startingPoint = this.startingPoint();
+    if (startingPoint === null) return false;
+    const endingPoint = this.endingPoint();
+    if (endingPoint === null) return false;
+    return this.mapService.getIsBetweenTwoPoints(startingPoint, endingPoint, { x: x + 0.5, y: y + 0.5 });
+  }
+
 }

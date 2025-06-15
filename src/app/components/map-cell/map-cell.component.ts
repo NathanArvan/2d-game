@@ -13,10 +13,12 @@ export class MapCellComponent {
   isObstacle = input<boolean>(false);
   isInRange  = input<boolean>(false);
   isValidTarget = input<boolean>(false);
+  isInLineOfSight = input<boolean>(false);
   token = input<Token | null>(null);
 
   getCellColor() {
     if (this.isObstacle()) return 'black';
+    if (this.isInLineOfSight()) return 'cyan';
     if (this.isValidTarget()) return 'green';
     if (this.isInRange()) return 'yellow';
     const token = this.token();

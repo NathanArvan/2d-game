@@ -19,6 +19,7 @@ enum ActionStates {
   InteractSelected,
   UseItemSelected,
   BuffSelected,
+  MeasureSelected
 }
 
 
@@ -40,7 +41,8 @@ export class BattleMapUiComponent implements OnInit {
   remainingActionsInTurn = signal<number>(0);
   log = signal<string[]>([]);
   actionTypes = ActionType;
-
+  startingPoint: { x: number, y: number } | null = null;
+  endingPoint: { x: number, y: number } | null = null;
 
   selectedAction = signal<Action | null>(null);
   selectedActionContext = computed(() => {
@@ -129,7 +131,25 @@ export class BattleMapUiComponent implements OnInit {
         this.remainingActionsInTurn.set(this.remainingActionsInTurn() - 1);
       }
     }
+
+    if(this.actionState() === ActionStates.MeasureSelected){
+      this.processMeasureLineOfSight(event)
+    }
   }
+
+  processMeasureLineOfSight(event: {x: number, y: number}): void {
+    if(!this.startingPoint){
+      this.startingPoint = {x:event.x, y:event.y}
+    }else if(!this.endingPoint){
+      this.endingPoint = {x:event.x, y:event.y}
+    }
+  }
+
+  clearPoints(): void {
+    this.startingPoint = null;
+    this.endingPoint = null;
+  }
+
 
   processAttackAtTarget(event: {x: number, y: number}): void {
     const characterIdAtPosition = this.getCharacterIdAtPosition(event.x,event.y)
@@ -199,6 +219,9 @@ export class BattleMapUiComponent implements OnInit {
     this.selectedAction.set(action);
   }
 
+  selectMeasure() {
+    this.actionState.set(ActionStates.MeasureSelected);
+  }
 
 
 

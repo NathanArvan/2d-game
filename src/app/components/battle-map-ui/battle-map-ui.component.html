@@ -29,6 +29,8 @@
       [items]="items()" 
       [location]="location()" 
       [actionContext]="selectedActionContext()" 
+      [startingPoint]="startingPoint" 
+      [endingPoint]="endingPoint"
       (battleCellClicked)="onBattleCellClicked($event)"
     ></app-map>
   </div>
@@ -90,6 +92,13 @@
               }
             }
           }
+          <div>
+            <div>Measure Actions:</div>
+            <div class="action-group">
+              <button (click)="selectMeasure()">Measure Line of Sight</button>
+            
+            </div>
+          </div>
         }
         @case (actionStates.MoveSelected) {
           <span>Select a square to move to</span>
@@ -103,6 +112,14 @@
           <span>Select an item to pick up</span>
           <button (click)="clearAction()">Cancel</button>
         }
+        @case (actionStates.MeasureSelected) {
+          <div>Measure Line of Sight:</div>
+          <div>Starting Point: {{ startingPoint?.x }},{{ startingPoint?.y }}</div>
+          <div>End Point: {{ endingPoint?.x }},{{ endingPoint?.y }}</div>
+          <button (click)="clearPoints()">Clear Selected Points</button>
+          <button (click)="clearAction()">Cancel</button>
+        }
+
       }
     </div>
   }
