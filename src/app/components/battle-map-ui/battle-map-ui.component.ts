@@ -11,6 +11,7 @@ import { ClassService } from '../../services/class.service';
 import { AttackService } from '../../services/attack.service';
 import { TurnState } from '../../models/turn.model';
 import { InitiativeBarComponent } from "../initiative-bar/initiative-bar.component";
+import { MapService } from '../../services/map.service';
 
 enum ActionStates {
   NoSelection,
@@ -19,6 +20,7 @@ enum ActionStates {
   InteractSelected,
   UseItemSelected,
   BuffSelected,
+  MeasureSelected
 }
 
 
@@ -33,14 +35,15 @@ export class BattleMapUiComponent implements OnInit {
 
   characters = signal<Character[]>([]);
   items = signal<ItemInstance[]>([]);
-  location = signal<Location>({ id: 0, name: '', width: 10, height: 10 });
+  location = signal<Location>({ id: 0, name: '', width: 10, height: 10, obstacles: [] });
   actionState = signal<ActionStates>(ActionStates.NoSelection);
   actionStates = ActionStates;
   battleState = signal<TurnState | undefined>(undefined);
   remainingActionsInTurn = signal<number>(0);
   log = signal<string[]>([]);
   actionTypes = ActionType;
-
+  startingPoint: { x: number, y: number } | null = null;
+  endingPoint: { x: number, y: number } | null = null;
 
   selectedAction = signal<Action | null>(null);
   selectedActionContext = computed(() => {
@@ -94,7 +97,7 @@ export class BattleMapUiComponent implements OnInit {
     private characterService: CharacterService,
     private classService: ClassService,
     private attackService: AttackService,
-
+    private mapService: MapService
   ) { 
     this.gameService.initializeMockData();
   }
@@ -112,9 +115,12 @@ export class BattleMapUiComponent implements OnInit {
 
   onBattleCellClicked(event: {x: number, y: number}): void {
     if (this.actionState() === ActionStates.MoveSelected) {
-      this.remainingActionsInTurn.set(this.remainingActionsInTurn() - 1);
-      this.moveCharacter(event.x, event.y);
-      this.clearAction();
+      const moveIsValid = this.moveIsValid(event);
+      if (moveIsValid) {
+        this.remainingActionsInTurn.set(this.remainingActionsInTurn() - 1);
+        this.moveCharacter(event.x, event.y);
+        this.clearAction(); 
+      }
     }
 
     if(this.actionState() === ActionStates.AttackSelected){
@@ -129,18 +135,72 @@ export class BattleMapUiComponent implements OnInit {
         this.remainingActionsInTurn.set(this.remainingActionsInTurn() - 1);
       }
     }
+
+    if(this.actionState() === ActionStates.MeasureSelected){
+      this.processMeasureLineOfSight(event)
+    }
   }
+
+  moveIsValid(event: {x: number, y: number}): boolean{
+    const currentCharacter = this.currentCharacter();
+    const currentAction = this.selectedAction();
+    if(currentCharacter === null || currentAction === null){
+      return false
+    }
+    const distance =this.mapService.getDistanceInSquares(currentCharacter.position, event);
+    if (distance > currentAction.range){
+      this.updateLog('Greater than character movement range.');
+      return false
+    }
+    return true;
+
+
+  }
+
+
+  processMeasureLineOfSight(event: {x: number, y: number}): void {
+    if(!this.startingPoint){
+      this.startingPoint = {x:event.x, y:event.y}
+    }else if(!this.endingPoint){
+      this.endingPoint = {x:event.x, y:event.y}
+    }
+  }
+
+  clearPoints(): void {
+    this.startingPoint = null;
+    this.endingPoint = null;
+  }
+
 
   processAttackAtTarget(event: {x: number, y: number}): void {
     const characterIdAtPosition = this.getCharacterIdAtPosition(event.x,event.y)
-      if(characterIdAtPosition) {
+    const attackIsValid = this.attackIsValid(event,characterIdAtPosition)
+    if(attackIsValid && characterIdAtPosition) {
         this.attackCharacter(characterIdAtPosition)
         this.clearAction();
         this.remainingActionsInTurn.set(this.remainingActionsInTurn() - 1);
-    } else {
-      this.updateLog('No character at position')
     }
   }
+
+  attackIsValid(event: {x: number, y: number}, id : number | null): boolean {
+    if (id === null) {
+      this.updateLog('No character at position')
+      return false;
+    }
+    const currentCharacter = this.currentCharacter();
+    const currentAction = this.selectedAction();
+    if (!currentCharacter || !currentAction) {
+      return false;
+    }
+    const distanceToTarget = this.mapService.getDistanceInSquares(currentCharacter.position, event);
+    const isWithinRange = distanceToTarget <= currentAction.range;
+    if(!isWithinRange){
+        this.updateLog('Greater than character attack range.');
+        return false;
+    }
+    return true;
+  }
+
 
   attackCharacter(characterId: number) {
     const attackedCharacterIndex = this.characters().findIndex(character => character.id === characterId);
@@ -149,7 +209,6 @@ export class BattleMapUiComponent implements OnInit {
        const characterList = this.characters();
        const targetCharacter =characterList[attackedCharacterIndex];
        let result: {message: string, updatedTarget: Character} | null = null;
-       //const currentWeapon = this.currentCharacter()?.equippedWeapon;
       const currentWeapon = this.currentCharacter()?.items[0];
       if (this.selectedAction()?.id === 11) {
           result = this.attackService.attackBareHanded(currentCharacter, targetCharacter);
@@ -199,6 +258,9 @@ export class BattleMapUiComponent implements OnInit {
     this.selectedAction.set(action);
   }
 
+  selectMeasure() {
+    this.actionState.set(ActionStates.MeasureSelected);
+  }
 
 
 

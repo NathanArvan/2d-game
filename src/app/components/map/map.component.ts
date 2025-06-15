@@ -5,6 +5,7 @@ import { Token, TokenType } from '../../models/token.model';
 import { ItemInstance } from '../../models/item.model';
 import { MapCellComponent } from "../map-cell/map-cell.component";
 import { Action } from '../../models/action.model';
+import { MapService } from '../../services/map.service';
 
 @Component({
   selector: 'app-map',
@@ -18,6 +19,8 @@ export class MapComponent implements OnInit{
   items = input<ItemInstance[]>([]);
   location = input.required<Location>();
   actionContext = input<{action: Action, position: { x:number,y:number}} | null>(null);
+  startingPoint = input<{ x:number,y:number} | null>(null);
+  endingPoint = input<{ x:number,y:number} | null>(null);
 
   @Output() battleCellClicked = new EventEmitter<{ x:number,y:number}>();
   
@@ -36,7 +39,7 @@ export class MapComponent implements OnInit{
     return grid;
   })
 
-  constructor() { }
+  constructor(private mapService: MapService) { }
 
    ngOnInit(): void {
     this.initializeGrid();
@@ -65,10 +68,8 @@ export class MapComponent implements OnInit{
   calculateIsInRange(x: number, y: number): boolean {
     const context = this.actionContext();
     if (context === null) return false;
-    const horizontalDistance = Math.abs(context.position.x - x);
-    const verticalDistance = Math.abs(context.position.y - y);
-    const actionRange = context.action.range;
-    return horizontalDistance <= actionRange && verticalDistance <= actionRange;
+    const distance = this.mapService.getDistanceInSquares(context.position, { x, y });
+    return distance <= context.action.range;
   }
 
   calculateIsValidTarget(x: number, y: number): boolean {
@@ -78,6 +79,29 @@ export class MapComponent implements OnInit{
     const cellContent = this.getCellContent(x, y);
     if (cellContent === null) return false;
     return cellContent.type === context.action.targetType;
+  }
+
+  calculateIsObstacle(x: number, y: number): boolean {
+    const obstacles = this.location().obstacles;
+    for (const obstacle of obstacles) {
+      if (
+        x >= obstacle.startingX &&
+        x < obstacle.startingX + obstacle.width &&
+        y >= obstacle.startingY &&
+        y < obstacle.startingY + obstacle.length
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  calculateIsInLine(x: number, y: number): boolean {
+    const startingPoint = this.startingPoint();
+    if (startingPoint === null) return false;
+    const endingPoint = this.endingPoint();
+    if (endingPoint === null) return false;
+    return this.mapService.getIsBetweenTwoPoints(startingPoint, endingPoint, { x: x + 0.5, y: y + 0.5 });
   }
 
 }

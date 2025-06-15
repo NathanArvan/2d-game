@@ -7,6 +7,8 @@
                         [token]="getCellContent(i, j)"
                         [isInRange]="calculateIsInRange(i, j)"
                         [isValidTarget]="calculateIsValidTarget(i, j)"
+                        [isObstacle]="calculateIsObstacle(i, j)"
+                        [isInLineOfSight]="calculateIsInLine(i, j)"
                     ></app-map-cell>
                 </div>
             }

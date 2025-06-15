@@ -1,6 +1,6 @@
-import { Character } from "../models/character.model";
+import { Character, CharacterType } from "../models/character.model";
 import { ItemInstance } from "../models/item.model";
-import { Location } from "../models/location.model";
+import { Location, Obstacle } from "../models/location.model";
 import { items } from "../permanent-data/items";
 
 export const mockCharacters: Character[] = [
@@ -26,7 +26,8 @@ export const mockCharacters: Character[] = [
             intelligence: 0,
             wisdom: 0,
             charisma: 0
-        }
+        },
+        type: CharacterType.PLAYER
     },
     {
         id: 2,
@@ -51,7 +52,8 @@ export const mockCharacters: Character[] = [
             intelligence: 0,
             wisdom: 0,
             charisma: 0
-        }
+        },
+        type: CharacterType.PLAYER
     },
     {
         id: 3,
@@ -75,7 +77,8 @@ export const mockCharacters: Character[] = [
             intelligence: 0,
             wisdom: 0,
             charisma: 0
-        }
+        },
+        type: CharacterType.PLAYER
     },
     {
         id: 4,
@@ -99,7 +102,8 @@ export const mockCharacters: Character[] = [
             intelligence: 0,
             wisdom: 0,
             charisma: 0
-        }
+        },
+        type: CharacterType.PLAYER
     },
 ]
 
@@ -124,9 +128,22 @@ export const mockItems: ItemInstance[] = [
     },
 ]
 
+const mockObstacles: Obstacle[] = [{
+    length : 2,
+    width : 2,
+    startingX: 15,
+    startingY: 17,
+}, {
+    length : 22,
+    width: 1,
+    startingX: 12,
+    startingY: 0
+}]
+
 export const mockMap: Location = {
-    width: 10,
-    height: 10,
+    width: 30,
+    height: 30,
     name: 'Grassland',
-    id: 2
+    id: 2,
+    obstacles: mockObstacles,
 }
