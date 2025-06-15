@@ -1,4 +1,4 @@
-import { Character } from "../models/character.model";
+import { Character, CharacterType } from "../models/character.model";
 import { ItemInstance } from "../models/item.model";
 import { Location, Obstacle } from "../models/location.model";
 import { items } from "../permanent-data/items";
@@ -26,7 +26,8 @@ export const mockCharacters: Character[] = [
             intelligence: 0,
             wisdom: 0,
             charisma: 0
-        }
+        },
+        type: CharacterType.PLAYER
     },
     {
         id: 2,
@@ -51,7 +52,8 @@ export const mockCharacters: Character[] = [
             intelligence: 0,
             wisdom: 0,
             charisma: 0
-        }
+        },
+        type: CharacterType.PLAYER
     },
     {
         id: 3,
@@ -75,7 +77,8 @@ export const mockCharacters: Character[] = [
             intelligence: 0,
             wisdom: 0,
             charisma: 0
-        }
+        },
+        type: CharacterType.PLAYER
     },
     {
         id: 4,
@@ -99,7 +102,8 @@ export const mockCharacters: Character[] = [
             intelligence: 0,
             wisdom: 0,
             charisma: 0
-        }
+        },
+        type: CharacterType.PLAYER
     },
 ]
 

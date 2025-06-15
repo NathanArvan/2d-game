@@ -13,6 +13,7 @@ export interface Character {
     equippedWeapon: ItemInstance | null;
     levels: ClassLevels[];
     stats: Stats;
+    type: CharacterType
 }
 
 export interface ClassLevels {
@@ -27,4 +28,11 @@ export interface Stats {
     intelligence: number;
     wisdom: number;
     charisma: number;
+}
+
+export enum CharacterType {
+    PLAYER,
+    ENEMY,
+    ALLY,
+    NPC
 }
