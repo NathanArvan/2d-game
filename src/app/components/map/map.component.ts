@@ -68,10 +68,12 @@ export class MapComponent implements OnInit{
   calculateIsInRange(x: number, y: number): boolean {
     const context = this.actionContext();
     if (context === null) return false;
-    const horizontalDistance = Math.abs(context.position.x - x);
-    const verticalDistance = Math.abs(context.position.y - y);
-    const actionRange = context.action.range;
-    return horizontalDistance <= actionRange && verticalDistance <= actionRange;
+    const distance = this.mapService.getDistanceInSquares(context.position, { x, y });
+    return distance <= context.action.range;
+    // const horizontalDistance = Math.abs(context.position.x - x);
+    // const verticalDistance = Math.abs(context.position.y - y);
+    // const actionRange = context.action.range;
+    // return horizontalDistance <= actionRange && verticalDistance <= actionRange;
   }
 
   calculateIsValidTarget(x: number, y: number): boolean {

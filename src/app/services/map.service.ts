@@ -105,4 +105,12 @@ export class MapService {
       return true;
     }
   }
+
+  // greatest number of horizontal or vertical squares between two points
+  getDistanceInSquares(start: { x: number; y: number }, end: { x: number; y: number }): number {
+    const dx = Math.abs(end.x - start.x);
+    const dy = Math.abs(end.y - start.y);
+    return Math.max(dx, dy);
+  }
+
 }
